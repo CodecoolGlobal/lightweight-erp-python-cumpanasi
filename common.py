@@ -1,8 +1,9 @@
 """ Common module
 implement commonly used functions here
 """
-TABLE_KEY = 0
+
 import random
+TABLE_KEY = 0
 
 
 def generate_random(table):
@@ -34,17 +35,22 @@ def generate_random(table):
         return lower_list[random.randint(0,len(lower_list)-1)] + upper_list[random.randint(0,len(upper_list)-1)] +  digit_list[random.randint(0,len(digit_list)-1)] +  digit_list[random.randint(0,len(digit_list)-1)] + upper_list[random.randint(0,len(upper_list)-1)] + lower_list[random.randint(0,len(lower_list)-1)] + final_symbols
 
     generated = generate_based_on_pattern()
+
+    #generated = ['kH14Ju#&', 'sG79Ti#&', 'fC47Pb#&', 'rM49Oh#&']
+
+    #generated = generated[random.randint(0,len(generated)-1)]
     duplicate = False
 
     for sublist in range(len(table)):
         if generated == table[sublist][TABLE_KEY]:
+            #print('duplicate')
             duplicate = True
 
     if duplicate == False:
         return generated
 
     elif duplicate == True:
-        generate_random(table)
+        return generate_random(table)
 
 
 print(generate_random([['kH14Ju#&', '1', '21', '2016', 'in', '31']]))
