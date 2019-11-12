@@ -4,6 +4,7 @@ implement commonly used functions here
 
 import random
 TABLE_KEY = 0
+FIRST_CHAR = 0
 
 
 def generate_random(table):
@@ -36,7 +37,7 @@ def generate_random(table):
 
     generated = generate_based_on_pattern()
 
-    #generated = ['kH14Ju#&', 'sG79Ti#&', 'fC47Pb#&', 'rM49Oh#&']
+    #generated = ['kH34Ju#&', 'sG79Ti#&'] #, 'fC47Pb#&', 'rM49Oh#&']
 
     #generated = generated[random.randint(0,len(generated)-1)]
     duplicate = False
@@ -54,3 +55,14 @@ def generate_random(table):
 
 
 print(generate_random([['kH14Ju#&', '1', '21', '2016', 'in', '31']]))
+
+
+def check_age(string):
+    digits = ['0','1','2','3','4','5','6','7','8','9']
+    if string[FIRST_CHAR] == 0:
+        return False
+    for char in string:
+        if char not in digits:
+            return False
+    return int(string) 
+
