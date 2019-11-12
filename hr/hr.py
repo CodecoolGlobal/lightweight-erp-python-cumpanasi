@@ -9,13 +9,13 @@ Data table structure:
 
 # everything you'll need is imported:
 # User interface module
-import ui
+#import ui
 # data manager module
-import data_manager
+#import data_manager
 # common module
 import common
 
-
+           
 def start_module():
     """
     Starts this module and displays its menu.
@@ -55,6 +55,17 @@ def add(table):
     """
 
     # your code
+
+    name_input = input("Insert name:")
+
+    birth_year = input('Insert birth year')
+
+    while common.check_age(birth_year) == False:
+        print("{} is not a valid age.".format(birth_year))
+        birth_year = input('Insert birth year')
+    
+    table.append([str(common.generate_random(table)), name_input, str(birth_year)])
+
 
     return table
 
@@ -122,3 +133,8 @@ def get_persons_closest_to_average(table):
     """
 
     # your code
+
+
+dummy_table = [['kH34Ju#&', 'Joe Empty', '1976'],['jH34Ju#&','Barbara Streisand','1950'],['tH34Ju#&','Jim Brown','2034']]
+
+print(add(dummy_table))
