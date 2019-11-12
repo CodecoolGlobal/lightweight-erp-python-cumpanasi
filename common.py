@@ -66,3 +66,22 @@ def check_age(string):
             return False
     return int(string) 
 
+def sort_me (lst, order = 'asc'):
+
+    if len(order) > 0:
+        if order not in ['asc','desc']:
+            order = 'asc'
+    
+    for i in range(len(lst)):
+
+        min_index = i 
+
+        for j in range(i+1, len(lst)):
+            if order == 'asc':
+                if lst[j] < lst[min_index]:
+                    min_index = j
+            elif order == 'desc':
+                if lst[j] > lst[min_index]:
+                    min_index = j        
+        lst[i],lst[min_index] = lst[min_index],lst[i] 
+    return lst
