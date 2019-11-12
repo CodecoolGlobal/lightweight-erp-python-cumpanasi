@@ -1,6 +1,7 @@
 """ User Interface (UI) module """
+import common
 
-
+CHECK_NUMS = ['Year', 'Amount']
 def print_table(table, title_list):
     """
     Prints table with data.
@@ -87,7 +88,22 @@ def get_inputs(list_labels, title):
 
     # your code
 
+    if len(title) > 0:
+        print(title)
+    for elem in list_labels:
+
+        if elem in CHECK_NUMS:
+            possible_int = input('{} '.format(elem))
+            while common.check_age(possible_int) == False:
+                print('value {} for {} is not a valid number type.'.format(possible_int, elem.lower()))
+                possible_int = input('{} '.format(elem))
+            inputs.append(possible_int)    
+
+        else:
+            inputs.append(input('{} '.format(elem)))    
+
     return inputs
+
 
 
 def print_error_message(message):
