@@ -41,6 +41,7 @@ def show_table(table):
     Returns:
         None
     """
+    
 
     # your code
 

@@ -29,6 +29,7 @@ def print_table(table, title_list):
     # your goes code
 
 
+
 def print_result(result, label):
     """
     Displays results of the special functions.

@@ -53,15 +53,17 @@ def start_module():
         option = inputs[0]
         if option == "1":
             show_table(table)
-        if option == "2":
+        elif option == "2":
             add(table)
-        if option == "3":
-            remove(table)
-        if option == "4":
-            update(table,)
-        if option == "5":
+        elif option == "3":
+            id = ui.get_inputs(["Id"], "Please enter the ID to remove: ")[0]
+            data_manager.write_table_to_file(file_name, remove(table, id))
+        elif option == "4":
+            id = ui.get_inputs(["Id"], "Please enter the ID to update: ")[0]
+            data_manager.write_table_to_file(file_name, update(table, id))
+        elif option == "5":
             which_year_max(table)
-        if option == "6":
+        elif option == "6":
             avg_amount(table, ui.get_inputs(["Year"], ""))
         elif option == "0":
             break
@@ -99,6 +101,12 @@ def add(table):
     """
 
     # your code
+    new_record = []
+    new_record.append(common.generate_random(table))
+    user_inputs = ui.get_inputs(['Month', 'Day','Year', 'Type','Amount'], 'Please provide accounting information:')
+    for user_input in user_inputs:
+        new_record.append(user_input)
+    table.append(new_record)
 
     return table
 
@@ -116,7 +124,9 @@ def remove(table, id_):
     """
 
     # your code
-
+    for row in table:
+        if row[ID] == id_:
+            table.remove(row)
     return table
 
 
@@ -133,9 +143,16 @@ def update(table, id_):
     """
 
     # your code
+    new_update = []
 
+    user_inputs = ui.get_inputs(['Month', 'Day', 'Year', 'Type', 'Amount'], 'Please provide accounting information:')
+    for i in range(len(table)):
+        if table[i][ID] == id_:
+            new_update.append(table[i][ID])
+            for user_input in user_inputs:
+                new_update.append(user_input)
+            table[i] = new_update
     return table
-
 
 # special functions:
 # ------------------

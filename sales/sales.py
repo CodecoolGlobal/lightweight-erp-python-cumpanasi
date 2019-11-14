@@ -18,7 +18,7 @@ import data_manager
 # common module
 import common
 
-
+file_sales = 'sales/sales.csv'
 def start_module():
     """
     Starts this module and displays its menu.
@@ -28,8 +28,38 @@ def start_module():
     Returns:
         None
     """
-
-    # your code
+    option_list = ['Show table',
+                   'Add',
+                   'Remove',
+                   'Update',
+                   'Get lowest price item id',
+                   'Get items sold between']
+    while True:
+        ui.print_menu("Sales manager menu", option_list, "Back to Main Menu")
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
+        if option == '1':
+            show_table(data_manager.get_table_from_file(file_sales))
+        elif option == '2':
+            add(data_manager.get_table_from_file(file_sales))
+        elif option == '3':
+            ID = ui.get_inputs(['ID'], "Give me the ID: ")
+            remove(data_manager.get_table_from_file(file_sales), ID[0])
+        elif option == '4':
+            ID = ui.get_inputs(['ID'], "Give me the ID: ")
+            update(data_manager.get_table_from_file(file_sales), ID[0])
+        elif option == '5':
+            result = get_lowest_price_item_id(data_manager.get_table_from_file(file_sales))
+            ui.print_result(result, "The lowest price ID: ")
+        elif option == '6':
+            dates = ui.get_inputs(['month from', 'day from', 'year from', 'month to', 'day to', 'year to'], "Give me the dates: ")
+            result = get_items_sold_between(data_manager.get_table_from_file(file_sales), dates[0], dates[1], dates[2], dates[3], dates[4], dates[5],)
+            ui.print_result(result, "Two dates: ")
+        elif option == '0':
+            break
+        else:
+            raise KeyError("There is no such option!")
+    
 
 
 def show_table(table):
@@ -43,7 +73,8 @@ def show_table(table):
         None
     """
 
-    # your code
+    title_list = ['id', 'title', 'price', 'month', 'day', 'year']
+    ui.print_table(table, title_list)
 
 
 def add(table):
@@ -57,9 +88,12 @@ def add(table):
         list: Table with a new record
     """
 
-    # your code
-
-    return table
+    new_record = ui.get_inputs(['title', 'price', 'month', 'day', 'year'], "")
+    new_record.insert(0, common.generate_random(table))
+    table.append(new_record)
+    data_manager.write_table_to_file(file_sales, table)
+    modified_sales = data_manager.get_table_from_file(file_sales)
+    return modified_sales
 
 
 def remove(table, id_):
