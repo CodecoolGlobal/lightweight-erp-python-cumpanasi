@@ -17,7 +17,6 @@ import data_manager
 # common module
 import common
 
-
 ID = 0
 MONTH = 1
 DAY = 2
@@ -54,10 +53,16 @@ def start_module():
         option = inputs[0]
         if option == "1":
             show_table(table)
+        if option == "2":
+            add(table)
+        if option == "3":
+            remove(table)
+        if option == "4":
+            update(table,)
         if option == "5":
-            ui.print_result(which_year_max(table), "Highest profit year: ")
+            which_year_max(table)
         if option == "6":
-            ui.print_result(round(avg_amount(table, input("An: ")), 2), "Average profit / year: ") 
+            avg_amount(table, ui.get_inputs(["Year"], ""))
         elif option == "0":
             break
         else:
@@ -76,9 +81,9 @@ def show_table(table):
     """
 
     # your code
-    # for x, val in enumerate(table):
-    #     print(f"{x} {val}")
-        
+    for x, val in enumerate(table):
+        print(f"{x} {val}")
+    
 
 
 
@@ -155,8 +160,7 @@ def which_year_max(table):
             profit_per_year[row[YEAR]] += int(row[AMOUNT])
         else:  # out
             profit_per_year[row[YEAR]] -= int(row[AMOUNT])
-    return int(max(profit_per_year, key=profit_per_year.get))
-
+    return ui.print_result([int(max(profit_per_year, key=profit_per_year.get))], "Highest profit year")
 
 
 def avg_amount(table, year):
@@ -175,10 +179,13 @@ def avg_amount(table, year):
     count = 0
     profit = 0
     for row in table:
-        if int(row[YEAR]) == int(year):
+        if row[YEAR] == year[0]:
             if row[TYPE] == "in":
                 profit += int(row[AMOUNT])
             else:
                 profit -= int(row[AMOUNT])
             count += 1
-    return profit / count
+    try:
+        return ui.print_result([profit / count], "Average profit / year")
+    except ZeroDivisionError:
+        ui.print_error_message("HAHA... nu ai scris anul care trebuie")
