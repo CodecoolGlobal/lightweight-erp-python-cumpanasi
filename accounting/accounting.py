@@ -9,7 +9,6 @@ Data table structure:
     * type (string): in = income, out = outflow
     * amount (int): amount of transaction in USD
 """
-
 # everything you'll need is imported:
 # User interface module
 import ui
@@ -17,6 +16,15 @@ import ui
 import data_manager
 # common module
 import common
+
+
+ID = 0
+MONTH = 1
+DAY = 2
+YEAR = 3
+TYPE = 4
+AMOUNT = 5
+file_name = "accounting/items.csv"
 
 
 def start_module():
@@ -30,6 +38,30 @@ def start_module():
     """
 
     # you code
+    table = data_manager.get_table_from_file(file_name)
+    title = "\n\t Accounting manager"
+    list_option = [
+        "Show table",
+        "Add",
+        "Remove",
+        "Update",
+        "Show year with highest profit",
+        "Average profit in given year"]
+    exit_message = "Go back to the main menu"
+    while True:
+        ui.print_menu(title, list_option, exit_message)
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
+        if option == "1":
+            show_table(table)
+        if option == "5":
+            ui.print_result(which_year_max(table), "Highest profit year: ")
+        if option == "6":
+            ui.print_result(round(avg_amount(table, input("An: ")), 2), "Average profit / year: ") 
+        elif option == "0":
+            break
+        else:
+            raise KeyError("There is no such option.")
 
 
 def show_table(table):
@@ -44,6 +76,10 @@ def show_table(table):
     """
 
     # your code
+    # for x, val in enumerate(table):
+    #     print(f"{x} {val}")
+        
+
 
 
 def add(table):
@@ -111,6 +147,16 @@ def which_year_max(table):
     """
 
     # your code
+    profit_per_year = {}
+    for row in table:
+        if row[YEAR] not in profit_per_year:
+            profit_per_year[row[YEAR]] = 0
+        if row[TYPE] == "in":
+            profit_per_year[row[YEAR]] += int(row[AMOUNT])
+        else:  # out
+            profit_per_year[row[YEAR]] -= int(row[AMOUNT])
+    return int(max(profit_per_year, key=profit_per_year.get))
+
 
 
 def avg_amount(table, year):
@@ -126,3 +172,13 @@ def avg_amount(table, year):
     """
 
     # your code
+    count = 0
+    profit = 0
+    for row in table:
+        if int(row[YEAR]) == int(year):
+            if row[TYPE] == "in":
+                profit += int(row[AMOUNT])
+            else:
+                profit -= int(row[AMOUNT])
+            count += 1
+    return profit / count

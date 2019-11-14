@@ -9,7 +9,7 @@ def print_table(table, title_list):
     """
     Prints table with data.
 
-    Example:
+    Example:git
         /-----------------------------------\
         |   id   |      title     |  type   |
         |--------|----------------|---------|
