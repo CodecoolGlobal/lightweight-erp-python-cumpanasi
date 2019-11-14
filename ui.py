@@ -1,7 +1,8 @@
 """ User Interface (UI) module """
 import common
 
-CHECK_NUMS = ['Year', 'Amount']
+CHECK_NUMS = ['Year', 'Amount','Age']
+FIRST_ELEM = 0
 def print_table(table, title_list):
     """
     Prints table with data.
@@ -22,8 +23,44 @@ def print_table(table, title_list):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-
+    
     # your goes code
+    longest_elements = []
+    longest_elements_sum = 0
+    longest_element_in_one_pillar = 0
+    index = 0
+    while index < len(title_list):
+        for game in table:
+            if len(game[index]) > longest_element_in_one_pillar:
+                longest_element_in_one_pillar = len(game[index])
+        if len(title_list[index]) > longest_element_in_one_pillar:
+            longest_element_in_one_pillar = len(title_list[index])
+        longest_elements.append(longest_element_in_one_pillar)
+        longest_element_in_one_pillar = 0
+        index += 1
+    for element in longest_elements:
+        longest_elements_sum += element
+    first_line_settlement = "/" +"{" + "0:-^" +str(longest_elements_sum+len(title_list)-2)+"}" + " \\"
+    print(first_line_settlement.format(""))
+    for titles in range(len(title_list)):
+        title_line_settlement = "|" +"{" + "0:^" +str(longest_elements[titles])+"}"
+        print(title_line_settlement.format(title_list[titles]),end = "")
+    print("|")
+    for elements in table:
+        for element in range(len(elements)):
+            empty_line_settlement = "|" +"{" + "0:-^" +str(longest_elements[element])+"}"
+            print(empty_line_settlement.format(""),end = "")
+        print("|")
+        for element in range(len(elements)):
+            element_line_settlement = "|" +"{" + "0:^" +str(longest_elements[element])+"}"
+            print(element_line_settlement.format(elements[element]),end = "")
+        print("|")
+    last_line_settlement = "\\" +"{" + "0:-^" +str(longest_elements_sum+len(title_list)-2)+"}" + " /"
+    print(last_line_settlement.format(""))
+
+
+
+    
 
 
 def print_result(result, label):
@@ -37,7 +74,25 @@ def print_result(result, label):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
+    if label != '':
+        print(label)
+    if type(result) == list:
+        if type(result[FIRST_ELEM]) == list:
+            pass
+        else:
+            for elem in range(len(result)):
+                if elem == len(result)-1:
+                    print(result[elem], end = " ")
+                else:
+                    print(result[elem], end = ", ")  
+    elif type(result) == dict:
+        for key in result.keys():
+            print('{}:{}'.format(key,result[key]))
 
+
+
+
+    print('\n')  
     # your code
 
 
@@ -61,7 +116,10 @@ def print_menu(title, list_options, exit_message):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-
+    print(f'\n\t{title}\n')
+    for index, val in enumerate(list_options):
+        print(f'({index + 1}) {val}')
+    print(f'(0) {exit_message}')
     # your code
 
 
@@ -94,14 +152,17 @@ def get_inputs(list_labels, title):
 
         if elem in CHECK_NUMS:
             possible_int = input('{} '.format(elem))
-            while common.check_age(possible_int) == False:
+            while common.check_empty(possible_int) == False or common.check_age(possible_int) == False:
                 print('value {} for {} is not a valid number type.'.format(possible_int, elem.lower()))
                 possible_int = input('{} '.format(elem))
             inputs.append(possible_int)    
 
         else:
-            inputs.append(input('{} '.format(elem)))    
-
+            possible_string = input('{} '.format(elem))
+            while common.check_empty(possible_string) == False:
+                print('This string can\'t be empty!')
+                possible_string = input('{} '.format(elem))
+            inputs.append(possible_string)    
     return inputs
 
 
@@ -116,5 +177,5 @@ def print_error_message(message):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-
+    print(f'{message} !')
     # your code

@@ -17,6 +17,7 @@ import data_manager
 # common module
 import common
 
+file_game = 'store/games.csv'
 
 def start_module():
     """
@@ -27,7 +28,38 @@ def start_module():
     Returns:
         None
     """
-
+    options_list = ["Show table",
+                    "Add",
+                    "Remove",
+                    "Update",
+                    "Get counts by manufacturers",
+                    "Get avarage by manufacturers"]
+    
+    while True:
+        ui.print_menu("Store manager menu", options_list, "Back to Main Menu")
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
+        if option == "1":
+            show_table(data_manager.get_table_from_file(file_game))
+        elif option == "2":
+            add(data_manager.get_table_from_file(file_game))
+        elif option == "3":
+            ID = ui.get_inputs(["ID"], "give me the ID")
+            remove(data_manager.get_table_from_file(file_game ),ID[0])
+        elif option =="4":
+            ID = ui.get_inputs(["ID"], "give me the ID")
+            update(data_manager.get_table_from_file(file_game ),ID[0])
+        elif option =="5":
+            result = get_counts_by_manufacturers(data_manager.get_table_from_file(file_game ))
+            ui.print_result(result,"The manufacturers are")
+        elif option == "6":
+            manufacturer = ui.get_inputs(["manufacturer"], "Give me the manufacturer")
+            result = get_average_by_manufacturer(data_manager.get_table_from_file(file_game),manufacturer[0])
+            ui.print_result(result,"The average amount of games in stock is")
+        elif option == "0":
+            break
+        else:
+            raise KeyError("There is no such option.")
     # your code
 
 
@@ -41,7 +73,8 @@ def show_table(table):
     Returns:
         None
     """
-
+    title_list = ["id","title","manufacturer","price","in_stock"]
+    ui.print_table(table, title_list)
     # your code
 
 
@@ -57,8 +90,12 @@ def add(table):
     """
 
     # your code
-
-    return table
+    new_record = ui.get_inputs(["title", "manufacturer", "price", "in_stock"], "")
+    new_record.insert(0, common.generate_random(table))
+    table.append(new_record)
+    data_manager.write_table_to_file(file_game, table)
+    modiefied_games = data_manager.get_table_from_file(file_game)
+    return modiefied_games
 
 
 def remove(table, id_):
@@ -74,6 +111,12 @@ def remove(table, id_):
     """
 
     # your code
+    for game in table:
+        if game[0] == id_:
+            table.remove(game)
+    data_manager.write_table_to_file(file_game, table)
+    modiefied_games = data_manager.get_table_from_file(file_game)
+    return modiefied_games
 
     return table
 
@@ -91,6 +134,14 @@ def update(table, id_):
     """
 
     # your code
+    new_data = ui.get_inputs(["title", "manufacturer", "price", "in_stock"],"please give me the details")
+    new_data.insert(0, id_)
+    for game in range(len(table)):
+        if table[game][0] == id_:
+            table[game] = new_data
+    data_manager.write_table_to_file(file_game, table)
+    modified_games = data_manager.get_table_from_file(file_game)
+    return modified_games
 
     return table
 
@@ -108,7 +159,10 @@ def get_counts_by_manufacturers(table):
     Returns:
          dict: A dictionary with this structure: { [manufacturer] : [count] }
     """
-
+    manufacturers = {}
+    for game in table:
+        manufacturers[game[2]] = manufacturers.get(game[2],0)+1
+    return manufacturers
     # your code
 
 
@@ -123,5 +177,15 @@ def get_average_by_manufacturer(table, manufacturer):
     Returns:
          number
     """
+    average = []
+    sum_sales = 0
+    one_manufacture_occurance = 0
+    for game in table:
+        if game[2].lower() == manufacturer.lower():
+            one_manufacture_occurance += 1
+            sum_sales += int(game[4])
+    average.append(sum_sales / one_manufacture_occurance)
+
+    return average
 
     # your code
