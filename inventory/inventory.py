@@ -17,6 +17,13 @@ import data_manager
 # common module
 import common
 
+ID = 0
+NAME = 1
+MANUFACTURER = 2
+PURCHASE_YEAR = 3
+DURABILITY = 4
+file_name = "inventory/inventory.csv"
+
 
 def start_module():
     """
@@ -29,6 +36,39 @@ def start_module():
     """
 
     # your code
+    table = data_manager.get_table_from_file(file_name)
+    title = "\nINVENTORY MANAGER"
+    list_options = [
+        "Show Table",
+        "Add to Table",
+        "Remove from Table",
+        "Update Table",
+        "Get available items",
+        "Get average durability by manufacturer"]
+    exit_message = "Go back to main menu"
+    while True:
+        ui.print_menu(title, list_options, exit_message)
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
+        if option == "1":
+            show_table(table)
+        elif option == '2':
+            add(table)
+        elif option == '3':
+            id = ui.get_inputs(["Id"], "Please enter the ID to remove: ")[0]
+            data_manager.write_table_to_file(file_name, remove(table, id))
+        elif option == '4':
+            id = ui.get_inputs(["Id"], "Please enter the ID to update: ")[0]
+            data_manager.write_table_to_file(file_name, update(table, id))
+        elif option == '5':
+            year = ui.get_inputs(["Year"], "Please enter a year: ")[0]
+            print(get_available_items(table, year)) #['kH34Ju#&', 'PlayStation 4', 'Sony', 2013, 4], ['jH34Ju#&', 'Xbox One', 'Microsoft', 2013, 4]
+        elif option == '6':
+            print(get_average_durability_by_manufacturers(table)) # {'Sony': 3.5, 'Microsoft': 4.0, 'Nintendo': 3.25}
+        elif option == "0":
+            break
+        else:
+            raise KeyError("There is no such option")
 
 
 def show_table(table):
@@ -44,6 +84,8 @@ def show_table(table):
     
 
     # your code
+    for x, val in enumerate(table):
+        print(f"{x} {val}")
 
 
 def add(table):
@@ -58,7 +100,12 @@ def add(table):
     """
 
     # your code
-
+    new_update = []
+    new_update.append(common.generate_random(table))
+    user_inputs = ui.get_inputs(["Name", "Manufacturer", "Purchase Year", "Durability"], "Please provide item information: ")
+    for user_input in user_inputs:
+        new_update.append(user_input)
+    table.append(new_update)
     return table
 
 
@@ -75,7 +122,9 @@ def remove(table, id_):
     """
 
     # your code
-
+    for row in table:
+        if row[ID] == id_:
+            table.remove(row)
     return table
 
 
@@ -92,7 +141,14 @@ def update(table, id_):
     """
 
     # your code
-
+    new_update = []
+    user_inputs = ui.get_inputs(["Name", "Manufacturer", "Purchase Year", "Durability"], "Please provide inventory information: ")
+    for i in range(len(table)):
+        if table[i][ID] == id_:
+            new_update.append(table[i][ID])
+            for user_input in user_inputs:
+                new_update.append(user_input)
+            table[i] = new_update
     return table
 
 
@@ -112,6 +168,14 @@ def get_available_items(table, year):
     """
 
     # your code
+    for row in table:
+        row[PURCHASE_YEAR] = int(row[PURCHASE_YEAR])
+        row[DURABILITY] = int(row[DURABILITY])
+    result = []
+    for row in table:
+        if (row[PURCHASE_YEAR] + row[DURABILITY]) > int(year):
+            result.append(row)
+    return result
 
 
 def get_average_durability_by_manufacturers(table):
@@ -126,3 +190,15 @@ def get_average_durability_by_manufacturers(table):
     """
 
     # your code
+    average_durability = {}
+    for row in table:
+        if row[MANUFACTURER] not in average_durability:
+            average_durability[row[MANUFACTURER]] = [0, 0]
+
+        average_durability[row[MANUFACTURER]][0] += int(row[DURABILITY])
+        average_durability[row[MANUFACTURER]][1] += 1
+
+    for key in average_durability.keys():
+        average_durability[key] = average_durability[key][0] / average_durability[key][1]
+
+    return average_durability

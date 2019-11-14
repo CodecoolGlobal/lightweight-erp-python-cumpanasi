@@ -38,7 +38,7 @@ def start_module():
 
     # you code
     table = data_manager.get_table_from_file(file_name)
-    title = "\n\t Accounting manager"
+    title = "\n\t ACCOUNTING MANAGER"
     list_option = [
         "Show table",
         "Add",
@@ -103,11 +103,10 @@ def add(table):
     # your code
     new_record = []
     new_record.append(common.generate_random(table))
-    user_inputs = ui.get_inputs(['Month', 'Day','Year', 'Type','Amount'], 'Please provide accounting information:')
+    user_inputs = ui.get_inputs(['Month', 'Day','Year', 'Type','Amount'], 'Please provide accounting information: ')
     for user_input in user_inputs:
         new_record.append(user_input)
     table.append(new_record)
-
     return table
 
 
