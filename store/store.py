@@ -44,10 +44,10 @@ def start_module():
         elif option == "2":
             add(data_manager.get_table_from_file(file_game))
         elif option == "3":
-            ID = ui.get_inputs(["ID"], "give me the ID")
+            ID = ui.get_inputs(["ID"], "give me the ID: ")
             remove(data_manager.get_table_from_file(file_game ),ID[0])
         elif option =="4":
-            ID = ui.get_inputs(["ID"], "give me the ID")
+            ID = ui.get_inputs(["ID"], "give me the ID: ")
             update(data_manager.get_table_from_file(file_game ),ID[0])
         elif option =="5":
             result = get_counts_by_manufacturers(data_manager.get_table_from_file(file_game ))
