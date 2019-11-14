@@ -62,9 +62,9 @@ def start_module():
             data_manager.write_table_to_file(file_name, update(table, id))
         elif option == '5':
             year = ui.get_inputs(["Year"], "Please enter a year: ")[0]
-            print(get_available_items(table, year)) #['kH34Ju#&', 'PlayStation 4', 'Sony', 2013, 4], ['jH34Ju#&', 'Xbox One', 'Microsoft', 2013, 4]
+            get_available_items(table, year)
         elif option == '6':
-            print(get_average_durability_by_manufacturers(table)) # {'Sony': 3.5, 'Microsoft': 4.0, 'Nintendo': 3.25}
+            get_average_durability_by_manufacturers(table)
         elif option == "0":
             break
         else:
@@ -175,7 +175,8 @@ def get_available_items(table, year):
     for row in table:
         if (row[PURCHASE_YEAR] + row[DURABILITY]) > int(year):
             result.append(row)
-    return result
+    #['kH34Ju#&', 'PlayStation 4', 'Sony', 2013, 4], ['jH34Ju#&', 'Xbox One', 'Microsoft', 2013, 4]
+    return ui.print_result(result, "TEST")
 
 
 def get_average_durability_by_manufacturers(table):
@@ -200,5 +201,4 @@ def get_average_durability_by_manufacturers(table):
 
     for key in average_durability.keys():
         average_durability[key] = average_durability[key][0] / average_durability[key][1]
-
-    return average_durability
+    return ui.print_result(average_durability, "Average durability time")
