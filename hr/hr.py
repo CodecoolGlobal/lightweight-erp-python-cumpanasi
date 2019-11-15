@@ -23,7 +23,7 @@ NAME = 1
 AGE = 2
 
 table = data_manager.get_table_from_file('hr/persons.csv')
-titles = ['ID', 'Name' , 'Birth Year']
+titles = ['ID', 'Name', 'Birth Year']
 
 def start_module():
     """

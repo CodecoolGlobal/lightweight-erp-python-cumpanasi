@@ -145,8 +145,8 @@ def update(table, id_):
     for i in range(len(table)):
         if table[i][ID] == id_:
             new_update.append(table[i][ID])
-            for user_input in user_inputs:
-                new_update.append(user_input)
+            for x in user_inputs:
+                new_update.append(x)
             table[i] = new_update
     return table
 
