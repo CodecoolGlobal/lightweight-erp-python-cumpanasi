@@ -111,6 +111,7 @@ def check_email(mail):
     domains = ['.com', '.co.uk', '.tv' , '.ro', '.hu']
     dot = '.'
     dot2 = '..'
+    double_underline = '__'
 
 
 
@@ -140,6 +141,9 @@ def check_email(mail):
     if mail_half[FIRST_HALF].find(dot2) != -1:
        return False
 
+    if mail_half[FIRST_HALF].find(double_underline) != -1:
+       return False
+
     if mail_half[FIRST_HALF].startswith(dot) != False or mail_half[FIRST_HALF].endswith(dot) != False:
         return False
 
@@ -154,7 +158,6 @@ def check_email(mail):
        return False
 
     provider = mail_half[SECOND_HALF][0:domain_start+1]
-    print(provider)
 
     if provider.startswith(dot) != False:
         return False
@@ -162,6 +165,9 @@ def check_email(mail):
     for symbol in prohibited:
         if symbol in provider:
             return False
+
+    if mail_half[SECOND_HALF].find(dot2) != -1:
+       return False
 
     if mail_half[SECOND_HALF].find(dot2) != -1:
        return False

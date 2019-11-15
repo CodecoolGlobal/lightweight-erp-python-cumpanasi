@@ -28,6 +28,7 @@ SUBSCRIBED = 3
 
 
 
+
 table = data_manager.get_table_from_file('crm/customers.csv')
 def start_module():
     
@@ -86,7 +87,8 @@ def show_table(table):
     """
 
     # your code
-
+    titles = ['ID','Name', 'Email', 'Subscribed']
+    ui.print_table(table,titles)
 
 def add(table):
     """
@@ -125,10 +127,10 @@ def remove(table, id_):
     # your code
     key = common.check_for_key(id_,table)
 
-    print(key)
+    
 
     if key == None:
-        ui.print_error_message('Key does not exist!')
+        ui.print_error_message('Key does not exist')
     else:
         table.pop(key)
         data_manager.write_table_to_file('crm/customers.csv', table)    
@@ -153,9 +155,9 @@ def update(table, id_):
 
     key = common.check_for_key(id_,table)
     if key == None:
-       ui.print_error_message('Key does not exist!')
+       ui.print_error_message('Key does not exist')
     else:
-        return_inputs = ui.get_inputs(['Name', 'Email', 'Subscribed'], 'Enter New Values')
+        return_inputs = ui.get_inputs(['Name', 'Mail', 'Subscribed'], 'Enter New Values')
         modif_index = key
 
         table[modif_index][NAME]  =  return_inputs[FIRST_PROP]
@@ -218,13 +220,4 @@ def get_subscribed_emails(table):
     ui.print_result(subscribed_mails, 'Subscribed user(s):')        
     # your code
 
-
-#get_longest_name_id(table)
-#get_subscribed_emails(table)
-#add(table)
-#return_inputs = ui.get_inputs(['ID'],'Enter the key of the corresponding record you want removed.')
-#remove(table, return_inputs[FIRST_PROP])
-
-#return_inputs = ui.get_inputs(['ID'],'Enter the key of the corresponding record you want to update.')
-#update(table, return_inputs[FIRST_PROP])
 

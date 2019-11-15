@@ -1,7 +1,9 @@
 """ User Interface (UI) module """
 import common
 
-CHECK_NUMS = ['Year', 'Amount', 'Age']
+CHECK_NUMS = ['Year', 'Amount','Age']
+CHECK_EMAIL = ['Mail']
+BINARY_FIELDS = ['Subscribed']
 FIRST_ELEM = 0
 
 
@@ -27,7 +29,56 @@ def print_table(table, title_list):
     """
 
     # your goes code
+    cols = len(title_list)
 
+    
+
+    table.insert(0,title_list)
+
+    for sublist in range(len(table)):
+        if cols != len(table[sublist]):
+            print('dataset does not match number of cols')
+            quit()
+
+    max_lenghts = []
+    maxi = -1
+    for sub_elem in range(cols):  
+        maxi = -1  
+        for sublist in range(len(table)):
+            if len(table[sublist][sub_elem]) > maxi:
+                maxi = len(table[sublist][sub_elem])
+        max_lenghts.append(maxi)
+    
+
+    
+
+    sub_elem = 0
+    
+    for sublist in range(len(table)):
+        if sublist == 0:
+            while sub_elem < len(table[0]):
+                
+                if sub_elem == len(table[0])- 1:
+                    print('\033[1;37;41m| {:^25} |'.format(table[sublist][sub_elem]), end ="")
+                else:
+                    print('\033[1;37;41m| {:^25} '.format(table[sublist][sub_elem]), end ="")
+                sub_elem += 1
+        
+            print('\033[0;32;48m\n') 
+            sub_elem = 0 
+        else:
+            while sub_elem < len(table[0]):
+                
+                if sub_elem == len(table[0])- 1:
+                    print('\033[0;37;44m| {:^25} |'.format(table[sublist][sub_elem]), end ="")
+                else:
+                    print('\033[0;37;44m| {:^25} '.format(table[sublist][sub_elem]), end ="")
+                sub_elem += 1
+            
+            print('\033[0;32;48m\n') 
+            sub_elem = 0          
+    print('\033[0;37;48m\n')
+    table.pop(0)
 
 
 def print_result(result, label):
@@ -121,15 +172,30 @@ def get_inputs(list_labels, title):
             while common.check_empty(possible_int) == False or common.check_age(possible_int) == False:
                 print('value {} for {} is not a valid number type.'.format(possible_int, elem.lower()))
                 possible_int = input('{} '.format(elem))
-            inputs.append(possible_int)
+            inputs.append(possible_int)   
+
+        elif elem in CHECK_EMAIL:
+            possible_mail = input('{} '.format(elem))
+            while common.check_empty(possible_mail) == False or common.check_email(possible_mail) == False:
+                print_error_message('Not a valid mail')
+                possible_mail = input('{} '.format(elem))
+            inputs.append(possible_mail)
+
+        elif elem in BINARY_FIELDS:
+            possible_binary = input('{} '.format(elem))
+            while common.check_empty(possible_binary) == False or common.check_binary(possible_binary) == False:
+                print_error_message('Not a valid binary field')
+                possible_binary = input('{} '.format(elem))
+            inputs.append(possible_binary)
+
         else:
             possible_string = input('{} '.format(elem))
             while common.check_empty(possible_string) == False:
-                print('This string can\'t be empty!')
+                print_error_message('This string can\'t be empty')
                 possible_string = input('{} '.format(elem))
             inputs.append(possible_string)
-    return inputs
 
+    return inputs
 
 def print_error_message(message):
     """

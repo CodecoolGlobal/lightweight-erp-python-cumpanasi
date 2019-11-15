@@ -23,7 +23,7 @@ NAME = 1
 AGE = 2
 
 table = data_manager.get_table_from_file('hr/persons.csv')
-
+titles = ['ID', 'Name' , 'Birth Year']
 
 def start_module():
     """
@@ -38,7 +38,7 @@ def start_module():
     # your code
     title = "\nHuman Resources manager\n"
     list_option = ['Show Table', 'Add to table', 'Remove from Table via ID', 
-    'Update record via ID', 'Get Person', 'Get closest to average']
+    'Update record via ID', 'Get Oldest Person', 'Get closest to average']
 
     exit_message = "Go back to the main menu"
     while True:
@@ -79,6 +79,7 @@ def show_table(table):
 
     # your code
 
+    ui.print_table(table,titles)
 
 def add(table):
     """
@@ -121,13 +122,11 @@ def remove(table, id_):
 
     key = common.check_for_key(id_,table)
 
-    print(key)
-
     if key == None:
-        print('Key does not exist!')
+         ui.print_error_message('Key does not exist')
     else:
         table.pop(key)
-        data_manager.write_table_to_file('some.txt', table)    
+        data_manager.write_table_to_file('hr/persons.csv', table)    
 
     #print(table)
     return table
@@ -148,7 +147,7 @@ def update(table, id_):
     # your code
     key = common.check_for_key(id_,table)
     if key == None:
-        print('Key does not exist!')
+         ui.print_error_message('Key does not exist')
     else:
         return_inputs = ui.get_inputs(['Name', 'Age'], 'Enter New Values')
         modif_index = key
@@ -229,18 +228,3 @@ def get_persons_closest_to_average(table):
 
 
 
-
-
-
-#dummy_table = [['kH34Ju#&', 'Joe Empty', '1976'],['jH34Ju#&','Barbara Streisand','1950'],['tH34Ju#&','Jim Brown','2034']]
-#print(table)
-#add(table)
-
-#return_inputs = ui.get_inputs(['ID'],'Enter the key of the corresponding record you want removed.')
-#remove(table, return_inputs[FIRST_PROP])
-
-#return_inputs = ui.get_inputs(['ID'],'Enter the key of the corresponding record you want to update.')
-#update(table, return_inputs[FIRST_PROP])
-
-#get_oldest_person(table)
-#get_persons_closest_to_average(table)
