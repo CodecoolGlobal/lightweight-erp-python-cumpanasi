@@ -24,7 +24,7 @@ YEAR = 3
 TYPE = 4
 AMOUNT = 5
 file_name = "accounting/items.csv"
-
+title_list = ['id', 'month', 'day', 'year', 'type', 'amount']
 
 def start_module():
     """
@@ -52,7 +52,7 @@ def start_module():
         inputs = ui.get_inputs(["Please enter a number: "], "")
         option = inputs[0]
         if option == "1":
-            show_table(table)
+            ui.print_table(table, title_list)
         elif option == "2":
             add(table)
         elif option == "3":
@@ -83,8 +83,7 @@ def show_table(table):
     """
 
     # your code
-    for x, val in enumerate(table):
-        print(f"{x} {val}")
+    # ui.print_table(table, title_list)
     
 
 

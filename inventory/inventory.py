@@ -23,6 +23,7 @@ MANUFACTURER = 2
 PURCHASE_YEAR = 3
 DURABILITY = 4
 file_name = "inventory/inventory.csv"
+title_list = ['id', 'name', 'manufacturer', 'purchase_year', 'durability']
 
 
 def start_module():
@@ -51,7 +52,7 @@ def start_module():
         inputs = ui.get_inputs(["Please enter a number: "], "")
         option = inputs[0]
         if option == "1":
-            show_table(table)
+            ui.print_table(table, title_list)
         elif option == '2':
             add(table)
         elif option == '3':
@@ -84,9 +85,7 @@ def show_table(table):
     
 
     # your code
-    for x, val in enumerate(table):
-        print(f"{x} {val}")
-
+    
 
 def add(table):
     """
@@ -176,7 +175,7 @@ def get_available_items(table, year):
         if (row[PURCHASE_YEAR] + row[DURABILITY]) > int(year):
             result.append(row)
     #['kH34Ju#&', 'PlayStation 4', 'Sony', 2013, 4], ['jH34Ju#&', 'Xbox One', 'Microsoft', 2013, 4]
-    return ui.print_result(result, "TEST")
+    return ui.print_result_inventory(result, "Durability")
 
 
 def get_average_durability_by_manufacturers(table):

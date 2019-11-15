@@ -17,7 +17,9 @@ import data_manager
 # common module
 import common
 
+title_list = ["id", "title", "manufacturer", "price", "in_stock"]
 file_game = 'store/games.csv'
+
 
 def start_module():
     """
@@ -36,11 +38,12 @@ def start_module():
                     "Get avarage by manufacturers"]
     
     while True:
+        table = data_manager.get_table_from_file(file_game)
         ui.print_menu("Store manager menu", options_list, "Back to Main Menu")
         inputs = ui.get_inputs(["Please enter a number: "], "")
         option = inputs[0]
         if option == "1":
-            show_table(data_manager.get_table_from_file(file_game))
+            ui.print_table(table, title_list)
         elif option == "2":
             add(data_manager.get_table_from_file(file_game))
         elif option == "3":
@@ -73,8 +76,8 @@ def show_table(table):
     Returns:
         None
     """
-    title_list = ["id","title","manufacturer","price","in_stock"]
-    ui.print_table(table, title_list)
+    
+    
     # your code
 
 
@@ -118,7 +121,7 @@ def remove(table, id_):
     modiefied_games = data_manager.get_table_from_file(file_game)
     return modiefied_games
 
-    return table
+    
 
 
 def update(table, id_):
@@ -143,7 +146,7 @@ def update(table, id_):
     modified_games = data_manager.get_table_from_file(file_game)
     return modified_games
 
-    return table
+    
 
 
 # special functions:

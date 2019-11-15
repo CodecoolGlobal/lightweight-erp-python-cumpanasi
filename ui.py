@@ -81,6 +81,10 @@ def print_table(table, title_list):
     table.pop(0)
 
 
+def print_result_inventory(result, label):
+    print(f"{result} {label}")
+
+
 def print_result(result, label):
     """
     Displays results of the special functions.
