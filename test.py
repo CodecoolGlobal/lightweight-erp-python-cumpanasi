@@ -43,10 +43,10 @@ def get_subscribed_list():
 
 
 def get_item_sold_between_dates():
-    return [["eH34Ju#&", "Astebreed", 25, 3, 10, 2016],
-            ["bH34Ju#&", "Age of Wonders II: The Wizard's Throne", 20, 4, 1, 2016],
-            ["vH34Ju#&", "AudioSurf", 23, 6, 2, 2016],
-            ["kH35Ju#&", "Age of Empires", 11, 3, 7, 2016]]
+    return [["eH34Ju#&", "Astebreed", 25, 3, 10, 2016, "jH34Jk#&"],
+            ["bH34Ju#&", "Age of Wonders II: The Wizard's Throne", 20, 4, 1, 2016, "kH14Jt#&"],
+            ["vH34Ju#&", "AudioSurf", 23, 6, 2, 2016, "kH14Jt#&"],
+            ["kH35Ju#&", "Age of Empires", 11, 3, 7, 2016, "jH34Jk#&"]]
 
 
 def get_count_by_manufacturer_list():
@@ -223,7 +223,7 @@ class InventoryTester(unittest.TestCase):
     def test_get_available_items(self):
         table = data_manager.get_table_from_file(self.data_file)
         expected = [["kH34Ju#&", "PlayStation 4", "Sony", 2013, 4], ["jH34Ju#&", "Xbox One", "Microsoft", 2013, 4]]
-        result = inventory.get_available_items(table, 2016)
+        result = inventory.get_available_items(table)
         compare_lists(self, expected, result)
 
     def test_get_average_durability_by_manufacturers(self):
@@ -233,9 +233,13 @@ class InventoryTester(unittest.TestCase):
         self.assertEqual(result, expected)
 
 
+class DataAnalyserTester(unittest.TestCase):
+    def test_forbidden_functions(self):
+        check_forbidden_functions(self, "data_analyser/data_analyser.py")
+
 
 def main():
-    unittest.main(verbosity=2)
+    unittest.main()
 
 
 if __name__ == '__main__':
