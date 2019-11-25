@@ -16,11 +16,8 @@ from accounting import accounting
 from sales import sales
 # Customer Relationship Management (CRM) module
 from crm import crm
-<<<<<<< HEAD
-=======
 # Data Analyser module
 from data_analyser import data_analyser
->>>>>>> origin/week2
 
 
 def choose():
@@ -38,11 +35,8 @@ def choose():
         sales.start_module()
     elif option == "6":
         crm.start_module()
-<<<<<<< HEAD
-=======
     elif option == "7":
         data_analyser.start_module()
->>>>>>> origin/week2
     elif option == "0":
         sys.exit(0)
     else:
@@ -55,12 +49,8 @@ def handle_menu():
                "Inventory manager",
                "Accounting manager",
                "Sales manager",
-<<<<<<< HEAD
-               "Customer Relationship Management (CRM)"]
-=======
                "Customer Relationship Management (CRM)",
                "Data Analyser"]
->>>>>>> origin/week2
 
     ui.print_menu("Main menu", options, "Exit program")
 
