@@ -44,7 +44,7 @@ def start_module():
     # your code
     title = "\nCustomer Relationship Management (CRM)\n"
     list_option = ['Show Table', 'Add to table', 'Remove from Table via ID', 
-    'Update record via ID', 'Get Longest Name ID', 'Get subscribed emails']
+    'Update record via ID', 'Get Longest Name ID', 'Get subscribed emails', 'Get Name from ID']
 
     exit_message = "Go back to the main menu"
     while True:
@@ -67,6 +67,9 @@ def start_module():
         elif option == "6":
             print('\n')
             get_subscribed_emails(table)
+        elif option == "7":
+            return_inputs = ui.get_inputs(['ID'],'Enter the key of the corresponding record you want to print all names for]')
+            get_name_by_id_from_table(table,return_inputs[0])   
         elif option == "0":
             break
         else:
@@ -241,6 +244,9 @@ def get_name_by_id(id):
     """
 
     # your code
+    for sublist in range(len(table)):
+        if table[sublist][ID] == id:
+            return table[sublist][NAME]
 
 
 
@@ -255,5 +261,9 @@ def get_name_by_id_from_table(table, id):
     Returns:
         str: the name of the customer
     """
-
+    names_list = []
+    for sublist in range(len(table)):
+        if table[sublist][ID] == id:
+            names_list.append(get_name_by_id(id))    
+    ui.print_result(names_list, 'Name for Index {id}:'.format(id = id))        
     # your code

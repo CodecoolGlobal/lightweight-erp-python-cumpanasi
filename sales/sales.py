@@ -74,7 +74,7 @@ def show_table(table):
         None
     """
 
-    title_list = ['id', 'title', 'price', 'month', 'day', 'year']
+    title_list = ['id', 'title', 'price', 'month', 'day', 'year', 'crm_id']
     ui.print_table(table, title_list)
 
 
