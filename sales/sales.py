@@ -20,6 +20,7 @@ import data_manager
 import common
 
 file_sales = 'sales/sales.csv'
+table = data_manager.get_table_from_file(file_sales)
 def start_module():
     """
     Starts this module and displays its menu.
@@ -34,7 +35,13 @@ def start_module():
                    'Remove',
                    'Update',
                    'Get lowest price item id',
-                   'Get items sold between']
+                   'Get items sold between',
+                   'Test_7',
+                   'Test_8',
+                   'Test_9',
+                   'Test_10',
+                   'Test_11',
+                   'Get all customers ID']
     while True:
         ui.print_menu("Sales manager menu", option_list, "Back to Main Menu")
         inputs = ui.get_inputs(["Please enter a number: "], "")
@@ -56,6 +63,9 @@ def start_module():
             dates = ui.get_inputs(['month from', 'day from', 'year from', 'month to', 'day to', 'year to'], "Give me the dates: ")
             result = get_items_sold_between(data_manager.get_table_from_file(file_sales), dates[0], dates[1], dates[2], dates[3], dates[4], dates[5],)
             ui.print_result(result, "Two dates: ")
+        elif option == '12':
+            get_all_customer_ids_from_table(table)
+
         elif option == '0':
             break
         else:
@@ -150,6 +160,8 @@ def get_lowest_price_item_id(table):
 
 
 def get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to):
+
+    
     """
     Question: Which items are sold between two given dates? (from_date < sale_date < to_date)
 
@@ -167,6 +179,15 @@ def get_items_sold_between(table, month_from, day_from, year_from, month_to, day
     """
 
     # your code
+    # games_sold = []
+    # for sublist in range(len(table)):
+    #     if table[sublist][YEAR] >= year_from and table[sublist][YEAR] <= year_to
+    #     and table[sublist][MONTH] >= month_from and table[sublist][MONTH] <= month_to
+    #     and table[sublist][DAY] >= day_from and table[sublist][DAY] < day_to:
+    #         games_sold.append(table[sublist][TITLE])
+
+
+
 
 
 # functions supports data abalyser
@@ -189,7 +210,7 @@ def get_title_by_id(id):
     # your code
 
 
-def get_title_by_id_from_table(table, id):
+def get_title_by_id_from_table(table, id): ## 7
 
     """
     Returns the title (str) of the item with the given id (str) on None om case of non-existing id.
@@ -217,7 +238,7 @@ def get_item_id_sold_last():
     # your code
 
 
-def get_item_id_sold_last_from_table(table):
+def get_item_id_sold_last_from_table(table): ##8
     """
     Returns the _id_ of the item that was sold most recently.
 
@@ -231,7 +252,7 @@ def get_item_id_sold_last_from_table(table):
     # your code
 
 
-def get_item_title_sold_last_from_table(table):
+def get_item_title_sold_last_from_table(table): ##9
     """
     Returns the _title_ of the item that was sold most recently.
 
@@ -260,7 +281,7 @@ def get_the_sum_of_prices(item_ids):
     # your code
 
 
-def get_the_sum_of_prices_from_table(table, item_ids):
+def get_the_sum_of_prices_from_table(table, item_ids): ##10
     """
     Returns the sum of the prices of the items in the item_ids.
 
@@ -290,7 +311,7 @@ def get_customer_id_by_sale_id(sale_id):
     # your code
 
 
-def get_customer_id_by_sale_id_from_table(table, sale_id):
+def get_customer_id_by_sale_id_from_table(table, sale_id): ##11
     """
     Returns the customer_id that belongs to the given sale_id
     or None if no such sale_id is in the table.
@@ -303,7 +324,7 @@ def get_customer_id_by_sale_id_from_table(table, sale_id):
     """
 
     # your code
-
+##### #####
 
 def get_all_customer_ids():
     """
@@ -314,9 +335,16 @@ def get_all_customer_ids():
     """
 
     # your code
+    CUSTOMER_ID = -1
+    all_customers_id = []
+    for sublist in range(len(table)):
+        all_customers_id.append(table[sublist][CUSTOMER_ID])
+    return all_customers_id    
 
 
-def get_all_customer_ids_from_table(table):
+
+
+def get_all_customer_ids_from_table(table): ##12
     """
     Returns a set of customer_ids that are present in the table.
 
@@ -327,6 +355,8 @@ def get_all_customer_ids_from_table(table):
     """
 
     # your code
+    all_customers = get_all_customer_ids()
+    ui.print_result(all_customers, 'All customer ID\'s:')
 
 
 def get_all_sales_ids_for_customer_ids():
@@ -345,7 +375,7 @@ def get_all_sales_ids_for_customer_ids():
     # your code
 
 
-def get_all_sales_ids_for_customer_ids_from_table(table):
+def get_all_sales_ids_for_customer_ids_from_table(table): ##13
     """
     Returns a dictionary of (customer_id, sale_ids) where:
         customer_id:
@@ -374,7 +404,7 @@ def get_num_of_sales_per_customer_ids():
     # your code
 
 
-def get_num_of_sales_per_customer_ids_from_table(table):
+def get_num_of_sales_per_customer_ids_from_table(table): ##14
     """
      Returns a dictionary of (customer_id, num_of_sales) where:
         customer_id:
