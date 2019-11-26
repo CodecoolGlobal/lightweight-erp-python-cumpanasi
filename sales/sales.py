@@ -21,6 +21,13 @@ import common
 
 file_sales = 'sales/sales.csv'
 table = data_manager.get_table_from_file(file_sales)
+ID = 0
+TITLE = 1
+PRICE = 2
+MONTH = 3
+DAY = 4
+YEAR = 5
+CUSTOMER_ID = 6
 def start_module():
     """
     Starts this module and displays its menu.
@@ -41,7 +48,9 @@ def start_module():
                    'Test_9',
                    'Test_10',
                    'Test_11',
-                   'Get all customers ID']
+                   'Get all customers ID',
+                   'Get all Sales for all ID\'s',
+                   'Get count of Sales per ID.']
     while True:
         ui.print_menu("Sales manager menu", option_list, "Back to Main Menu")
         inputs = ui.get_inputs(["Please enter a number: "], "")
@@ -65,6 +74,10 @@ def start_module():
             ui.print_result(result, "Two dates: ")
         elif option == '12':
             get_all_customer_ids_from_table(table)
+        elif option == '13':
+            get_all_sales_ids_for_customer_ids_from_table(table)
+        elif option == '14':
+            get_num_of_sales_per_customer_ids_from_table(table)
 
         elif option == '0':
             break
@@ -335,6 +348,9 @@ def get_all_customer_ids():
     """
 
     # your code
+    file_sales = 'sales/sales.csv'
+    table = data_manager.get_table_from_file(file_sales)
+
     CUSTOMER_ID = -1
     all_customers_id = []
     for sublist in range(len(table)):
@@ -373,7 +389,18 @@ def get_all_sales_ids_for_customer_ids():
     """
 
     # your code
-
+    file_sales = 'sales/sales.csv'
+    table = data_manager.get_table_from_file(file_sales)
+    customer_id_sales_id = {}
+    for sublist in range(len(table)):
+        if table[sublist][CUSTOMER_ID] not in customer_id_sales_id.keys():
+            customer_id_sales_id[table[sublist][CUSTOMER_ID]] = []
+            customer_id_sales_id[table[sublist][CUSTOMER_ID]].append(table[sublist][ID])
+        else:
+            customer_id_sales_id[table[sublist][CUSTOMER_ID]].append(table[sublist][ID])   
+    
+    return customer_id_sales_id        
+    
 
 def get_all_sales_ids_for_customer_ids_from_table(table): ##13
     """
@@ -389,7 +416,8 @@ def get_all_sales_ids_for_customer_ids_from_table(table): ##13
     """
 
     # your code
-
+    sales_by_id = get_all_sales_ids_for_customer_ids()
+    ui.print_result(sales_by_id, 'Customer ID\'s and their associated purchases ID:')
 
 def get_num_of_sales_per_customer_ids():
     """
@@ -402,6 +430,17 @@ def get_num_of_sales_per_customer_ids():
     """
 
     # your code
+    file_sales = 'sales/sales.csv'
+    table = data_manager.get_table_from_file(file_sales)
+    customer_id_sales_id_count = {}
+    for sublist in range(len(table)):
+        if table[sublist][CUSTOMER_ID] not in customer_id_sales_id_count.keys():
+            customer_id_sales_id_count[table[sublist][CUSTOMER_ID]] = 1
+
+        else:
+            customer_id_sales_id_count[table[sublist][CUSTOMER_ID]] += 1 
+    
+    return customer_id_sales_id_count   
 
 
 def get_num_of_sales_per_customer_ids_from_table(table): ##14
@@ -416,3 +455,6 @@ def get_num_of_sales_per_customer_ids_from_table(table): ##14
     """
 
     # your code
+
+    count_sales_per_id = get_num_of_sales_per_customer_ids()
+    ui.print_result(count_sales_per_id,'Count of sales per Customer ID: ')
