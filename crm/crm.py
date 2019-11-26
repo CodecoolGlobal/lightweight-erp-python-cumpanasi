@@ -247,6 +247,7 @@ def get_name_by_id(id):
     for sublist in range(len(table)):
         if table[sublist][ID] == id:
             return table[sublist][NAME]
+    return None      
 
 
 
@@ -264,6 +265,9 @@ def get_name_by_id_from_table(table, id):
     names_list = []
     for sublist in range(len(table)):
         if table[sublist][ID] == id:
-            names_list.append(get_name_by_id(id))    
-    ui.print_result(names_list, 'Name for Index {id}:'.format(id = id))        
+            names_list.append(get_name_by_id(id))
+    if len(names_list) == 0:
+        ui.print_error_message('No names for thar ID found')
+    else:                
+        ui.print_result(names_list, 'Name for Index {id}:'.format(id = id))        
     # your code
