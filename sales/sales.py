@@ -1,176 +1,185 @@
-""" Sales module
+# """ Sales module
 
-Data table structure:
-    * id (string): Unique and random generated identifier
-        at least 2 special characters (except: ';'), 2 number, 2 lower and 2 upper case letters)
-    * title (string): Title of the game sold
-    * price (number): The actual sale price in USD
-    * month (number): Month of the sale
-    * day (number): Day of the sale
-    * year (number): Year of the sale
-    * customer_id (string): id from the crm
-"""
+# Data table structure:
+#     * id (string): Unique and random generated identifier
+#         at least 2 special characters (except: ';'), 2 number, 2 lower and 2 upper case letters)
+#     * title (string): Title of the game sold
+#     * price (number): The actual sale price in USD
+#     * month (number): Month of the sale
+#     * day (number): Day of the sale
+#     * year (number): Year of the sale
+#     * customer_id (string): id from the crm
+# """
 
-# everything you'll need is imported:
-# User interface module
-import ui
-# data manager module
-import data_manager
-# common module
-import common
+# # everything you'll need is imported:
+# # User interface module
+# import ui
+# # data manager module
+# import data_manager
+# # common module
+# import common
 
-file_sales = 'sales/sales.csv'
-def start_module():
-    """
-    Starts this module and displays its menu.
-     * User can access default special features from here.
-     * User can go back to main menu from here.
+# file_sales = 'sales/sales.csv'
+# def start_module():
+#     """
+#     Starts this module and displays its menu.
+#      * User can access default special features from here.
+#      * User can go back to main menu from here.
 
-    Returns:
-        None
-    """
-    option_list = ['Show table',
-                   'Add',
-                   'Remove',
-                   'Update',
-                   'Get lowest price item id',
-                   'Get items sold between']
-    while True:
-        ui.print_menu("Sales manager menu", option_list, "Back to Main Menu")
-        inputs = ui.get_inputs(["Please enter a number: "], "")
-        option = inputs[0]
-        if option == '1':
-            show_table(data_manager.get_table_from_file(file_sales))
-        elif option == '2':
-            add(data_manager.get_table_from_file(file_sales))
-        elif option == '3':
-            ID = ui.get_inputs(['ID'], "Give me the ID: ")
-            remove(data_manager.get_table_from_file(file_sales), ID[0])
-        elif option == '4':
-            ID = ui.get_inputs(['ID'], "Give me the ID: ")
-            update(data_manager.get_table_from_file(file_sales), ID[0])
-        elif option == '5':
-            result = get_lowest_price_item_id(data_manager.get_table_from_file(file_sales))
-            ui.print_result(result, "The lowest price ID: ")
-        elif option == '6':
-            dates = ui.get_inputs(['month from', 'day from', 'year from', 'month to', 'day to', 'year to'], "Give me the dates: ")
-            result = get_items_sold_between(data_manager.get_table_from_file(file_sales), dates[0], dates[1], dates[2], dates[3], dates[4], dates[5],)
-            ui.print_result(result, "Two dates: ")
-        elif option == '0':
-            break
-        else:
-            raise KeyError("There is no such option!")
+#     Returns:
+#         None
+#     """
+#     option_list = ['Show table',
+#                    'Add',
+#                    'Remove',
+#                    'Update',
+#                    'Get lowest price item id',
+#                    'Get items sold between']
+#     while True:
+#         ui.print_menu("Sales manager menu", option_list, "Back to Main Menu")
+#         inputs = ui.get_inputs(["Please enter a number: "], "")
+#         option = inputs[0]
+#         if option == '1':
+#             show_table(data_manager.get_table_from_file(file_sales))
+#         elif option == '2':
+#             add(data_manager.get_table_from_file(file_sales))
+#         elif option == '3':
+#             ID = ui.get_inputs(['ID'], "Give me the ID: ")
+#             remove(data_manager.get_table_from_file(file_sales), ID[0])
+#         elif option == '4':
+#             ID = ui.get_inputs(['ID'], "Give me the ID: ")
+#             update(data_manager.get_table_from_file(file_sales), ID[0])
+#         elif option == '5':
+#             result = get_lowest_price_item_id(data_manager.get_table_from_file(file_sales))
+#             ui.print_result(result, "The lowest price ID: ")
+#         elif option == '6':
+#             dates = ui.get_inputs(['month from', 'day from', 'year from', 'month to', 'day to', 'year to'], "Give me the dates: ")
+#             result = get_items_sold_between(data_manager.get_table_from_file(file_sales), dates[0], dates[1], dates[2], dates[3], dates[4], dates[5],)
+#             ui.print_result(result, "Two dates: ")
+#         elif option == '0':
+#             break
+#         else:
+#             raise KeyError("There is no such option!")
     
 
 
-def show_table(table):
-    """
-    Display a table
+# def show_table(table):
+#     """
+#     Display a table
 
-    Args:
-        table (list): list of lists to be displayed.
+#     Args:
+#         table (list): list of lists to be displayed.
 
-    Returns:
-        None
-    """
+#     Returns:
+#         None
+#     """
 
-    title_list = ['id', 'title', 'price', 'month', 'day', 'year']
-    ui.print_table(table, title_list)
-
-
-def add(table):
-    """
-    Asks user for input and adds it into the table.
-
-    Args:
-        table (list): table to add new record to
-
-    Returns:
-        list: Table with a new record
-    """
-
-    new_record = ui.get_inputs(['title', 'price', 'month', 'day', 'year'], "")
-    new_record.insert(0, common.generate_random(table))
-    table.append(new_record)
-    data_manager.write_table_to_file(file_sales, table)
-    modified_sales = data_manager.get_table_from_file(file_sales)
-    return modified_sales
+#     title_list = ['id', 'title', 'price', 'month', 'day', 'year']
+#     ui.print_table(table, title_list)
 
 
-def remove(table, id_):
-    """
-    Remove a record with a given id from the table.
+# def add(table):
+#     """
+#     Asks user for input and adds it into the table.
 
-    Args:
-        table (list): table to remove a record from
-        id_ (str): id of a record to be removed
+#     Args:
+#         table (list): table to add new record to
 
-    Returns:
-        list: Table without specified record.
-    """
+#     Returns:
+#         list: Table with a new record
+#     """
 
-    # your code
-
-    return table
-
-
-def update(table, id_):
-    """
-    Updates specified record in the table. Ask users for new data.
-
-    Args:
-        table (list): list in which record should be updated
-        id_ (str): id of a record to update
-
-    Returns:
-        list: table with updated record
-    """
-
-    # your code
-
-    return table
+#     new_record = ui.get_inputs(['title', 'price', 'month', 'day', 'year'], "")
+#     new_record.insert(0, common.generate_random(table))
+#     table.append(new_record)
+#     data_manager.write_table_to_file(file_sales, table)
+#     modified_sales = data_manager.get_table_from_file(file_sales)
+#     return modified_sales
 
 
-# special functions:
-# ------------------
+# def remove(table, id_):
+#     """
+#     Remove a record with a given id from the table.
 
-def get_lowest_price_item_id(table):
-    """
-    Question: What is the id of the item that was sold for the lowest price?
-    if there are more than one item at the lowest price, return the last item by alphabetical order of the title
+#     Args:
+#         table (list): table to remove a record from
+#         id_ (str): id of a record to be removed
 
-    Args:
-        table (list): data table to work on
+#     Returns:
+#         list: Table without specified record.
+#     """
 
-    Returns:
-         string: id
-    """
+#     # your code
 
-    # your code
-
-
-def get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to):
-    """
-    Question: Which items are sold between two given dates? (from_date < sale_date < to_date)
-
-    Args:
-        table (list): data table to work on
-        month_from (int)
-        day_from (int)
-        year_from (int)
-        month_to (int)
-        day_to (int)
-        year_to (int)
-
-    Returns:
-        list: list of lists (the filtered table)
-    """
-
-    # your code
+#     return table
 
 
-# functions supports data abalyser
-# --------------------------------
+# def update(table, id_):
+#     """
+#     Updates specified record in the table. Ask users for new data.
+
+#     Args:
+#         table (list): list in which record should be updated
+#         id_ (str): id of a record to update
+
+#     Returns:
+#         list: table with updated record
+#     """
+
+#     # your code
+
+#     return table
+
+
+# # special functions:
+# # ------------------
+
+# def get_lowest_price_item_id(table):
+#     """
+#     Question: What is the id of the item that was sold for the lowest price?
+#     if there are more than one item at the lowest price, return the last item by alphabetical order of the title
+
+#     Args:
+#         table (list): data table to work on
+
+#     Returns:
+#          string: id
+#     """
+
+#     # your code
+
+
+# def get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to):
+#     """
+#     Question: Which items are sold between two given dates? (from_date < sale_date < to_date)
+
+#     Args:
+#         table (list): data table to work on
+#         month_from (int)
+#         day_from (int)
+#         year_from (int)
+#         month_to (int)
+#         day_to (int)
+#         year_to (int)
+
+#     Returns:
+#         list: list of lists (the filtered table)
+#     """
+
+#     # your code
+
+
+# # functions supports data abnalyser
+# # --------------------------------
+ID = 0
+TITLE = 1
+PRICE = 2
+MONTH = 3
+DAY = 4
+YEAR = 5
+CUSTOMER_ID = 6
+
+table = [['kH34Ju#&', 'Age of Empires II: The Age of Kings', '32', '10', '23', '2016', 'jH34Jk#&'], ['jH34Ju#&', 'Age of Mythology', '40', '1', '21', '2016', 'jH34Jk#&'], ['tH34Ju#&', 'Age of Empires II: The Conquerors', '30', '2', '12', '2016', 'jH34Jk#&'], ['eH34Ju#&', 'Astebreed', '25', '3', '10', '2016', 'jH34Jk#&'], ['bH34Ju#&', "Age of Wonders II: The Wizard's Throne", '20', '4', '1', '2016', 'kH14Jt#&'], ['vH34Ju#&', 'AudioSurf', '23', '6', '2', '2016', 'kH14Jt#&'], ['kH14Ju#&', 'Amnesia: The Dark Descent', '32', '7', '6', '2016', 'jH34Jk#&'], ['kH35Ju#&', 'Age of Empires', '11', '3', '7', '2016', 'jH34Jk#&'], ['kH38Ju#&', 'Anno 2070', '67', '11', '27', '2015', 'jH34Jk#&'], ['kH94Ju#&', 'Alan Wake', '80', '12', '19', '2015', 'jH34Jk#&'], ['kH34Ji#&', 'Act of War: Direct Action', '27', '6', '15', '2015', 'kH14Jt#&'], ['jH34Jk#&', 'Antichamber', '30', '7', '23', '2015', 'kH14Jh#&'], ['tH34Jl#&', 'Age of Wonders: Shadow Magic', '40', '8', '12', '2015', 'jH34Jk#&'], ['eH34Jy#&', 'Age of Wonders III', '34', '5', '11', '2015', 'jH34Jk#&'], ['bH34Jx#&', 'ARMA 2', '43', '9', '5', '2015', 'jH34Jk#&'], ['vH34Jz#&', 'Alien Swarm', '49', '4', '2', '2015', 'kH14Jt#&'], ['kH14Jt#&', 'Act of War: High Treason', '45', '3', '12', '2015', 'kH14Jt#&'], ['kH35Jr#&', 'ARMA 3', '45', '6', '19', '2015', 'kH14Jt#&'], ['kH38Je#&', 'Amnesia: A Machine for Pigs', '26', '7', '29', '2015', 'kH14Jt#&'], ['kH94Jw#&', 'Age of Empires II: HD Edition', '38', '8', '27', '2015', 'kH14Jt#&']]
 
 
 def get_title_by_id(id):
@@ -188,6 +197,12 @@ def get_title_by_id(id):
 
     # your code
 
+    # table = data_manager.get_table_from_file("sales/sales.csv")
+    for x in table:
+        if x[ID] == id:
+            return x[TITLE]
+    return None
+
 
 def get_title_by_id_from_table(table, id):
 
@@ -203,6 +218,10 @@ def get_title_by_id_from_table(table, id):
     """
 
     # your code
+    for x in table:
+        if x[ID] == id:
+            return x[TITLE]
+    return None
 
 
 def get_item_id_sold_last():
@@ -215,6 +234,29 @@ def get_item_id_sold_last():
     """
 
     # your code
+
+    # table = data_manager.get_table_from_file("sales/sales.csv")
+    sold_dates = []
+
+    for items in table:
+        if len(items[MONTH]) == 1:
+            items[MONTH] = "0" + items[MONTH]
+        if len(items[DAY]) == 1:
+            items[DAY] = "0" + items[DAY]
+        dates = "".join(items[YEAR] + items[MONTH] + items[DAY])
+        sold_dates.append(dates)
+    
+    last_sold = sold_dates[0]
+    for x in sold_dates:
+        if x > last_sold:
+            last_sold = x
+
+    last_sold_index = 0
+
+    for i in range(len(sold_dates)):
+        if sold_dates[i] == last_sold:
+            last_sold_index = i
+    return table[last_sold_index][ID]
 
 
 def get_item_id_sold_last_from_table(table):
@@ -229,6 +271,26 @@ def get_item_id_sold_last_from_table(table):
     """
 
     # your code
+    sold_dates = []
+
+    for items in table:
+        if len(items[MONTH]) == 1:
+            items[MONTH] = "0" + items[MONTH]
+        if len(items[DAY]) == 1:
+            items[DAY] = "0" + items[DAY]
+        dates = "".join(items[YEAR] + items[MONTH] + items[DAY])
+        sold_dates.append(dates)
+    last_sold = sold_dates[0]
+    for x in sold_dates:
+        if x > last_sold:
+            last_sold = x
+
+    last_sold_index = 0
+
+    for i in range(len(sold_dates)):
+        if sold_dates[i] == last_sold:
+            last_sold_index = i
+    return table[last_sold_index][ID]
 
 
 def get_item_title_sold_last_from_table(table):
@@ -243,6 +305,7 @@ def get_item_title_sold_last_from_table(table):
     """
 
     # your code
+    return get_title_by_id_from_table(table, get_item_id_sold_last_from_table(table))
 
 
 def get_the_sum_of_prices(item_ids):
