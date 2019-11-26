@@ -111,7 +111,16 @@ def print_result(result, label):
                     print(result[elem], end=", ")  
     elif type(result) == dict:
         for key in result.keys():
-            print('{}:{}'.format(key, result[key]))
+            if type(result[key]) == list:
+                print('{key}: '.format(key = key), end = '')
+                for elem in range(len(result[key])):
+                    if elem == len(result[key])-1:
+                        print(result[key][elem], end=" ")
+                    else:
+                        print(result[key][elem], end=", ")
+                print('\n')        
+            else:
+                print('{}:{}'.format(key, result[key]))
     print('\n')
 
 
