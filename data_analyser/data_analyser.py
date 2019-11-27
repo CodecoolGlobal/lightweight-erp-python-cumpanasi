@@ -50,6 +50,10 @@ def get_the_last_buyer_id():
     """
 
     # your code
+    last_sold = sales.get_item_id_sold_last()
+    customer_id_last = sales.get_customer_id_by_sale_id(last_sold)
+    return crm.get_name_by_id(customer_id_last)
+
 
 
 def get_the_buyer_name_spent_most_and_the_money_spent():
@@ -61,6 +65,8 @@ def get_the_buyer_name_spent_most_and_the_money_spent():
     """
 
     # your code
+    last_sold = sales.get_item_id_sold_last()
+    return sales.get_customer_id_by_sale_id(last_sold)
 
 
 def get_the_buyer_id_spent_most_and_the_money_spent():
