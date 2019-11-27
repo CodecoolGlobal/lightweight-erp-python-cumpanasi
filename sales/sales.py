@@ -288,7 +288,11 @@ def get_title_by_id(id):
     """
 
     # your code
-
+    table = data_manager.get_table_from_file("sales/sales.csv")
+    for x in table:
+        if x[ID] == id:
+            return x[TITLE]
+    return None
 
 def get_title_by_id_from_table(table, id): ## 7
 
@@ -304,6 +308,10 @@ def get_title_by_id_from_table(table, id): ## 7
     """
 
     # your code
+    for x in table:
+        if x[ID] == id:
+            return x[TITLE]
+    return None
 
 
 def get_item_id_sold_last():
@@ -316,6 +324,28 @@ def get_item_id_sold_last():
     """
 
     # your code
+    table = data_manager.get_table_from_file("sales/sales.csv")
+    sold_dates = []
+
+    for items in table:
+        if len(items[MONTH]) == 1:
+            items[MONTH] = "0" + items[MONTH]
+        if len(items[DAY]) == 1:
+            items[DAY] = "0" + items[DAY]
+        dates = "".join(items[YEAR] + items[MONTH] + items[DAY])
+        sold_dates.append(dates)
+    
+    last_sold = sold_dates[0]
+    for x in sold_dates:
+        if x > last_sold:
+            last_sold = x
+
+    last_sold_index = 0
+
+    for i in range(len(sold_dates)):
+        if sold_dates[i] == last_sold:
+            last_sold_index = i
+    return table[last_sold_index][ID]
 
 
 def get_item_id_sold_last_from_table(table): ##8
@@ -330,6 +360,26 @@ def get_item_id_sold_last_from_table(table): ##8
     """
 
     # your code
+    sold_dates = []
+
+    for items in table:
+        if len(items[MONTH]) == 1:
+            items[MONTH] = "0" + items[MONTH]
+        if len(items[DAY]) == 1:
+            items[DAY] = "0" + items[DAY]
+        dates = "".join(items[YEAR] + items[MONTH] + items[DAY])
+        sold_dates.append(dates)
+    last_sold = sold_dates[0]
+    for x in sold_dates:
+        if x > last_sold:
+            last_sold = x
+
+    last_sold_index = 0
+
+    for i in range(len(sold_dates)):
+        if sold_dates[i] == last_sold:
+            last_sold_index = i
+    return table[last_sold_index][ID]
 
 
 def get_item_title_sold_last_from_table(table): ##9
@@ -344,6 +394,7 @@ def get_item_title_sold_last_from_table(table): ##9
     """
 
     # your code
+    return get_title_by_id_from_table(table, get_item_id_sold_last_from_table(table))
 
 
 def get_the_sum_of_prices(item_ids):
@@ -359,6 +410,14 @@ def get_the_sum_of_prices(item_ids):
     """
 
     # your code
+    table = data_manager.get_table_from_file(file_sales)
+    sum_item_ids = 0
+    for ids in item_ids:
+        for item in table:
+            if ids == item[ID]:
+                sum_item_ids += int(item[PRICE])
+    return sum_item_ids
+
 
 
 def get_the_sum_of_prices_from_table(table, item_ids): ##10
@@ -374,6 +433,12 @@ def get_the_sum_of_prices_from_table(table, item_ids): ##10
     """
 
     # your code
+    sum_item_ids = 0
+    for ids in item_ids:
+        for item in table:
+            if ids == item[ID]:
+                sum_item_ids += int(item[PRICE])
+    return sum_item_ids
 
 
 def get_customer_id_by_sale_id(sale_id):
@@ -389,6 +454,10 @@ def get_customer_id_by_sale_id(sale_id):
     """
 
     # your code
+    table = data_manager.get_table_from_file(file_sales)
+    for register in table:
+        if register[ID] == sale_id:
+            return register[CUSTOMER_ID]
 
 
 def get_customer_id_by_sale_id_from_table(table, sale_id): ##11
@@ -404,7 +473,10 @@ def get_customer_id_by_sale_id_from_table(table, sale_id): ##11
     """
 
     # your code
-##### #####
+    for register in table:
+        if register[ID] == sale_id:
+            return register[CUSTOMER_ID]
+
 
 def get_all_customer_ids():
     """
@@ -422,9 +494,7 @@ def get_all_customer_ids():
     all_customers_id = []
     for sublist in range(len(table)):
         all_customers_id.append(table[sublist][CUSTOMER_ID])
-    return all_customers_id    
-
-
+    return all_customers_id
 
 
 def get_all_customer_ids_from_table(table): ##12
