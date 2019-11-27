@@ -1,9 +1,11 @@
 """ User Interface (UI) module """
 import common
 
-CHECK_NUMS = ['Year', 'Amount','Age']
+custom = common.return_table('crm/customers.csv')
+CHECK_NUMS = ['Year', 'Amount', 'Age','Price']
 CHECK_EMAIL = ['Mail']
 BINARY_FIELDS = ['Subscribed']
+OTHER_KEYS = {'Key From Customers': custom}
 FIRST_ELEM = 0
 
 
@@ -173,9 +175,9 @@ def get_inputs(list_labels, title):
             [<user_input_1>, <user_input_2>, <user_input_3>]
     """
     inputs = []
-
     # your code
 
+    months = {1:31, 2:28, 3:31, 4:30, 5:31, 6:30, 7:31, 8:31, 9:30, 10:31, 11:30, 12:31}
     if len(title) > 0:
         print(title)
     for elem in list_labels:
@@ -185,7 +187,31 @@ def get_inputs(list_labels, title):
             while common.check_empty(possible_int) == False or common.check_age(possible_int) == False:
                 print('value {} for {} is not a valid number type.'.format(possible_int, elem.lower()))
                 possible_int = input('{} '.format(elem))
+            
+            if elem == 'Year':
+                if common.check_leap(int(possible_int)) == True:
+                    months[2] = 29
+                    print('{Year} is a Leap Year, February will have 29 days.'.format(Year = possible_int))
             inputs.append(possible_int)   
+        
+        elif elem == 'Month':
+            possible_int = input('{} '.format(elem))
+            while common.check_month(possible_int) == False:
+                possible_int = input('{} '.format(elem))
+            inputs.append(possible_int)    
+        
+        elif elem == 'Day': 
+            possible_int = input('{} '.format(elem))
+            while common.check_day(possible_int, months, int(inputs[-1])) == False:
+                possible_int = input('{} '.format(elem))
+            inputs.append(possible_int)
+
+        elif elem in OTHER_KEYS.keys():
+            possible_string = input('{} '.format(elem))
+            while common.check_empty(possible_string) == False or common.check_for_key(possible_string, OTHER_KEYS[elem]) == None:
+                print_error_message('Invalid Key')
+                possible_string = input('{} '.format(elem))
+            inputs.append(possible_string)    
 
         elif elem in CHECK_EMAIL:
             possible_mail = input('{} '.format(elem))
@@ -207,7 +233,7 @@ def get_inputs(list_labels, title):
                 print_error_message('This string can\'t be empty')
                 possible_string = input('{} '.format(elem))
             inputs.append(possible_string)
-
+    print(months)
     return inputs
 
 def print_error_message(message):

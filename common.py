@@ -3,6 +3,7 @@ implement commonly used functions here
 """
 
 import random
+import data_manager
 TABLE_KEY = 0
 FIRST_CHAR = 0
 
@@ -90,7 +91,7 @@ def sort_me (lst, order = 'asc'):
     return lst
 
 
-def check_for_key(key,table):
+def check_for_key(key, table):
 
     for record in range(len(table)):
         if str(key) == str(table[record][TABLE_KEY]):
@@ -186,3 +187,42 @@ def check_leap(year):
     if year % 4 == 0 and year % 100 != 0 or year % 400 == 0:
         return True
     return False  
+
+
+def check_month(possible_month):
+    if check_empty(possible_month) == False:
+        print('Input can\'t be empty')
+        return False
+    else:
+        if check_age(possible_month) == False:
+            print('Unparsable Datatype!')
+            return False
+        else:
+            month_number = check_age(possible_month)
+            if month_number > 12 or month_number < 1:
+                print('Month Value is out of bounds.')
+                return False
+            else:
+                return True              
+
+def check_day(possible_day, months, month):
+    if check_empty(possible_day) == False:
+        print('Input can\'t be empty')
+        return False
+    else:
+        if check_age(possible_day) == False:
+            print('Unparsable Datatype!')
+            return False
+        else:
+            day_number = check_age(possible_day) 
+            if day_number > months[month] or day_number > months[month]:
+                print('Day value is out of bounds. PLease insert a value in the range 1 - {}.'.format(months[month]))
+                return False
+            else:
+                return True        
+
+
+def return_table(filename):
+    table = data_manager.get_table_from_file(filename)
+
+    return table

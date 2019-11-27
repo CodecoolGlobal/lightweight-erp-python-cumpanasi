@@ -28,6 +28,12 @@ MONTH = 3
 DAY = 4
 YEAR = 5
 CUSTOMER_ID = 6
+FIRST_PROP = 0
+SECOND_PROP = 1
+THIRD_PROP = 2
+FOURTH_PROP = 3
+FIFTH_PROP = 4
+SIXTH_PROP = 5
 def start_module():
     """
     Starts this module and displays its menu.
@@ -112,12 +118,13 @@ def add(table):
         list: Table with a new record
     """
 
-    new_record = ui.get_inputs(['title', 'price', 'month', 'day', 'year'], "")
-    new_record.insert(0, common.generate_random(table))
-    table.append(new_record)
-    data_manager.write_table_to_file(file_sales, table)
-    modified_sales = data_manager.get_table_from_file(file_sales)
-    return modified_sales
+    return_inputs = ui.get_inputs(['Title', 'Price', 'Year', 'Month' , 'Day', 'Key From Customers'],"Please enter a new record.")
+    key = str(common.generate_random(table))
+    table.append([key,return_inputs[FIRST_PROP] ,str(return_inputs[SECOND_PROP]), str(return_inputs[FOURTH_PROP]), 
+    str(return_inputs[FIFTH_PROP]) , str(return_inputs[THIRD_PROP]), return_inputs[SIXTH_PROP]])
+    data_manager.write_table_to_file('sales/sales.csv', table)
+
+    return table
 
 
 def remove(table, id_):
