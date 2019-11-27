@@ -246,7 +246,6 @@ def get_item_title_sold_last_from_table(table):
     # your code
 '''
 #  ****** prima functie pe care trb sa o fac *******
-table = [['kH34Ju#&', 'Age of Empires II: The Age of Kings','32','10','23','2016','jH34Jk#&'], ['jH34Ju#&','Age of Mythology','40','1','21','2016','jH34Jk#&'], ['tH34Ju#&','Age of Empires II: The Conquerors','30','2','12','2016','jH34Jk#&']]
 
 def get_the_sum_of_prices(item_ids):
     """
@@ -265,10 +264,10 @@ def get_the_sum_of_prices(item_ids):
         for item in table:
             if ids == item[ID]:
                 sum_item_ids += int(item[PRICE])
-    # return sum_item_ids
-    print(sum_item_ids)
+    return sum_item_ids
+    
     # your code
-get_the_sum_of_prices(['kH34Ju#&','jH34Ju#&', 'tH34Ju#&'])
+
 
 def get_the_sum_of_prices_from_table(table, item_ids):
     '''
@@ -286,10 +285,10 @@ def get_the_sum_of_prices_from_table(table, item_ids):
         for item in table:
             if ids == item[ID]:
                 sum_item_ids += int(item[PRICE])
-    # return sum_item_ids
-    print(sum_item_ids)
+    return sum_item_ids
+    
     # your code
-get_the_sum_of_prices_from_table(table, ['kH34Ju#&','jH34Ju#&','tH34Ju#&'])
+
 
 def get_customer_id_by_sale_id(sale_id):
     """
@@ -305,9 +304,8 @@ def get_customer_id_by_sale_id(sale_id):
     # table = data_manager.get_table_from_file(file_sales)
     for register in table:
         if register[ID] == sale_id:
-            # return register[CUSTOMER_ID]
-            print(register[CUSTOMER_ID])
-get_customer_id_by_sale_id('kH34Ju#&')
+            return register[CUSTOMER_ID]
+       
 
     # your code
 
@@ -327,9 +325,9 @@ def get_customer_id_by_sale_id_from_table(table, sale_id):
     # your code
     for register in table:
         if register[ID] == sale_id:
-            # return register[CUSTOMER_ID]
-            print(register[CUSTOMER_ID])
-get_customer_id_by_sale_id_from_table(table, 'jH34Ju#&')
+            return register[CUSTOMER_ID]
+           
+
 
 # *********** ultima **************
 '''

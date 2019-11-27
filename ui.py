@@ -112,6 +112,8 @@ def print_result(result, label):
     elif type(result) == dict:
         for key in result.keys():
             print('{}:{}'.format(key, result[key]))
+    elif type(result) == int:
+        print(result)
     print('\n')
 
 

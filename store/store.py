@@ -43,7 +43,7 @@ def start_module():
         inputs = ui.get_inputs(["Please enter a number: "], "")
         option = inputs[0]
         if option == "1":
-            ui.print_table(table, title_list)
+            show_table(table)   
         elif option == "2":
             add(data_manager.get_table_from_file(file_game))
         elif option == "3":
@@ -77,7 +77,7 @@ def show_table(table):
         None
     """
     
-    
+    ui.print_table(table, title_list)
     # your code
 
 
@@ -91,7 +91,6 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-
     # your code
     new_record = ui.get_inputs(["title", "manufacturer", "price", "in_stock"], "")
     new_record.insert(0, common.generate_random(table))
