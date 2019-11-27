@@ -233,7 +233,6 @@ def get_inputs(list_labels, title):
                 print_error_message('This string can\'t be empty')
                 possible_string = input('{} '.format(elem))
             inputs.append(possible_string)
-    print(months)
     return inputs
 
 def print_error_message(message):

@@ -72,12 +72,26 @@ def start_module():
             ID = ui.get_inputs(['ID'], "Give me the ID: ")
             update(data_manager.get_table_from_file(file_sales), ID[0])
         elif option == '5':
-            result = get_lowest_price_item_id(data_manager.get_table_from_file(file_sales))
+            result = get_lowest_price_item_id(table)
             ui.print_result(result, "The lowest price ID: ")
         elif option == '6':
-            dates = ui.get_inputs(['month from', 'day from', 'year from', 'month to', 'day to', 'year to'], "Give me the dates: ")
-            result = get_items_sold_between(data_manager.get_table_from_file(file_sales), dates[0], dates[1], dates[2], dates[3], dates[4], dates[5],)
-            ui.print_result(result, "Two dates: ")
+            date1 = ui.get_inputs(['Year', 'Month' , 'Day'],'Get Start Date')
+            date2 = ui.get_inputs(['Year', 'Month' , 'Day'], 'Get End Date')
+
+            if common.flip_dates(int(date1[FIRST_PROP]), int(date1[SECOND_PROP]), int(date1[THIRD_PROP]), int(date2[FIRST_PROP]), int(date2[SECOND_PROP]), int(date2[THIRD_PROP])) == True:
+                date1[FIRST_PROP],date2[FIRST_PROP] = date2[FIRST_PROP],date1[FIRST_PROP]
+                date1[SECOND_PROP],date2[SECOND_PROP] = date2[SECOND_PROP],date1[SECOND_PROP]
+                date1[THIRD_PROP],date2[THIRD_PROP] = date2[THIRD_PROP],date1[THIRD_PROP]
+            
+            year_from = int(date1[FIRST_PROP])
+            year_to = int(date2[FIRST_PROP])
+            month_from = int(date1[SECOND_PROP])
+            month_to = int(date2[SECOND_PROP])
+            day_from = int(date1[THIRD_PROP])
+            day_to = int(date2[THIRD_PROP])
+            
+            result = get_items_sold_between(table,month_from, day_from, year_from, month_to, day_to, year_to)
+            ui.print_result(result, "Games in between: ")
         elif option == '12':
             get_all_customer_ids_from_table(table)
         elif option == '13':
@@ -141,6 +155,17 @@ def remove(table, id_):
 
     # your code
 
+    key = common.check_for_key(id_,table)
+
+    
+
+    if key == None:
+        ui.print_error_message('Key does not exist')
+    else:
+        table.pop(key)
+        data_manager.write_table_to_file('sales/sales.csv', table)    
+
+    #print(table)
     return table
 
 
@@ -156,7 +181,20 @@ def update(table, id_):
         list: table with updated record
     """
 
-    # your code
+    key = common.check_for_key(id_,table)
+    if key == None:
+       ui.print_error_message('Key does not exist')
+    else:
+        return_inputs = ui.get_inputs(['Title', 'Price', 'Year', 'Month' , 'Day', 'Key From Customers'],"Please enter a new record.")
+        modif_index = key
+
+        table[modif_index][TITLE]  =  return_inputs[FIRST_PROP]
+        table[modif_index][PRICE] = return_inputs[SECOND_PROP]
+        table[modif_index][MONTH] = return_inputs[FOURTH_PROP]
+        table[modif_index][DAY] = return_inputs[FIFTH_PROP]
+        table[modif_index][YEAR] = return_inputs[THIRD_PROP]
+        table[modif_index][CUSTOMER_ID] = return_inputs[SIXTH_PROP]
+        data_manager.write_table_to_file('sales/sales.csv', table) 
 
     return table
 
@@ -177,7 +215,29 @@ def get_lowest_price_item_id(table):
     """
 
     # your code
+    if common.check_empty_table(table) == True:
+        ui.print_error_message('Table is empty')
+    min_price = table[0][PRICE]
+    names_ids_min = []
+    names_alpha = []
+    for record in range(len(table)):
+        if int(min_price) > int(table[record][PRICE]):
+            min_price = int(table[record][PRICE])
+    
+    for record in range(len(table)):
+        if int(table[record][PRICE]) == int(min_price):
+            names_ids_min.append([table[record][ID], table[record][TITLE]])
+    for sublist in range(len(names_ids_min)):
+        names_ids_min[sublist][SECOND_PROP] = names_ids_min[sublist][SECOND_PROP].lower()
 
+    names_ids_min = common.sort_me(names_ids_min)
+    print(names_ids_min)
+
+    for elem in range(len(names_ids_min)):
+        names_alpha.append(names_ids_min[elem][FIRST_PROP])
+
+    return names_alpha  
+    
 
 def get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to):
 
@@ -199,14 +259,14 @@ def get_items_sold_between(table, month_from, day_from, year_from, month_to, day
     """
 
     # your code
-    # games_sold = []
-    # for sublist in range(len(table)):
-    #     if table[sublist][YEAR] >= year_from and table[sublist][YEAR] <= year_to
-    #     and table[sublist][MONTH] >= month_from and table[sublist][MONTH] <= month_to
-    #     and table[sublist][DAY] >= day_from and table[sublist][DAY] < day_to:
-    #         games_sold.append(table[sublist][TITLE])
+    games_sold_between = []
+    #print(table)
 
+    for element in range(len(table)):
+        if common.date_in_between(int(table[element][YEAR]), int(table[element][MONTH]), int(table[element][DAY]), year_from, month_from, day_from, year_to, month_to, day_to) == True:
+            games_sold_between.append(table[element])
 
+    print(games_sold_between)
 
 
 

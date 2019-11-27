@@ -244,6 +244,7 @@ def get_name_by_id(id):
     """
 
     # your code
+    table = data_manager.get_table_from_file('crm/customers.csv')
     for sublist in range(len(table)):
         if table[sublist][ID] == id:
             return table[sublist][NAME]

@@ -82,10 +82,10 @@ def sort_me (lst, order = 'asc'):
 
         for j in range(i+1, len(lst)):
             if order == 'asc':
-                if lst[j] < lst[min_index]:
+                if lst[j][1] < lst[min_index][1]:
                     min_index = j
             elif order == 'desc':
-                if lst[j] > lst[min_index]:
+                if lst[j][1] > lst[min_index][1]:
                     min_index = j        
         lst[i],lst[min_index] = lst[min_index],lst[i] 
     return lst
@@ -226,3 +226,108 @@ def return_table(filename):
     table = data_manager.get_table_from_file(filename)
 
     return table
+
+def check_empty_table(table):
+    if len(table) == 0:
+        return True
+    else:
+        return False    
+
+
+def flip_dates(year1, month1, day1, year2, month2, day2):
+    if year1 > year2 or month1 > month2 or day1 > day2:
+        return True
+    else:
+        return False      
+    return None 
+
+def date_in_between(year, month, day, year1, month1, day1, year2, month2, day2):
+    if year > year1 and year < year2:
+        return True
+    elif year == year1 and year1 == year2:
+        if month > month1 and month < month2:
+            return True
+        elif month == month1:
+            if day >= day1:
+                return True
+            else:
+                return False
+        elif month == month2:
+            if day <= day2:
+                return True
+            else:
+                return False
+        elif month1 == month2:
+            if day >= day1 and day <= day2:
+                return True
+            else:
+                return False
+        elif month < month1 or month > month2:
+            return False
+    elif year == year1 and year1 != year2:
+        if month > month1:
+            return True
+        elif month == month1:
+            if day >= day1:
+                return True
+            else:
+                return False    
+        else:
+            return False
+    elif year == year2 and year1 != year2:
+        if month < month2:
+            return True
+        elif month == month2:
+            if day <= day2:
+                return True 
+            else: 
+                return False
+        else:
+            return False                                                  
+    else:
+        return False                  
+
+
+'''
+year1 = 2004
+month1 = 4
+day1 = 27
+
+year2 = 2004
+month2 = 6
+day2 = 5
+
+
+print(date_in_between(2004, 5, 10,year1,month1,day1,year2,month2,day2))
+print(date_in_between(2040, 5, 10,year1,month1,day1,year2,month2,day2))
+print(date_in_between(2004,4,28,year1,month1,day1,year2,month2,day2))
+print(date_in_between(2004,6,4,year1,month1,day1,year2,month2,day2))
+print(date_in_between(2004,8,4,year1,month1,day1,year2,month2,day2))
+print(date_in_between(2004,2,4,year1,month1,day1,year2,month2,day2))
+print(date_in_between(2004,4,23,year1,month1,day1,year2,month2,day2))
+print(date_in_between(2004,6,7,year1,month1,day1,year2,month2,day2))
+
+year1 = 2002
+month1 = 4
+day1 = 27
+
+year2 = 2007
+month2 = 4
+day2 = 27
+
+
+print('\n'*3)
+print(date_in_between(2004, 5, 10,year1,month1,day1,year2,month2,day2))
+
+
+year1 = 2004
+month1 = 4
+day1 = 27
+
+year2 = 2007
+month2 = 4
+day2 = 27
+
+print(date_in_between(2004, 5, 10,year1,month1,day1,year2,month2,day2))
+print(date_in_between(2007, 5, 27,year1,month1,day1,year2,month2,day2))
+'''
