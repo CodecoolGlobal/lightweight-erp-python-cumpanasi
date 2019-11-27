@@ -13,13 +13,20 @@ Data table structure:
 
 # everything you'll need is imported:
 # User interface module
-import ui
+#import ui
 # data manager module
-import data_manager
+#import data_manager
 # common module
-import common
-
+# import common
+ID = 0
+TITLE = 1
+PRICE = 2
+MONTH = 3
+DAY = 4
+YEAR = 5
+CUSTOMER_ID = 6
 file_sales = 'sales/sales.csv'
+'''
 def start_module():
     """
     Starts this module and displays its menu.
@@ -74,7 +81,7 @@ def show_table(table):
         None
     """
 
-    title_list = ['id', 'title', 'price', 'month', 'day', 'year']
+    title_list = ['id', 'title', 'price', 'month', 'day', 'year', 'crm_id']
     ui.print_table(table, title_list)
 
 
@@ -89,12 +96,7 @@ def add(table):
         list: Table with a new record
     """
 
-    new_record = ui.get_inputs(['title', 'price', 'month', 'day', 'year'], "")
-    new_record.insert(0, common.generate_random(table))
-    table.append(new_record)
-    data_manager.write_table_to_file(file_sales, table)
-    modified_sales = data_manager.get_table_from_file(file_sales)
-    return modified_sales
+    
 
 
 def remove(table, id_):
@@ -110,8 +112,7 @@ def remove(table, id_):
     """
 
     # your code
-
-    return table
+    
 
 
 def update(table, id_):
@@ -127,8 +128,7 @@ def update(table, id_):
     """
 
     # your code
-
-    return table
+    
 
 
 # special functions:
@@ -146,7 +146,8 @@ def get_lowest_price_item_id(table):
          string: id
     """
 
-    # your code
+    
+
 
 
 def get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to):
@@ -243,7 +244,9 @@ def get_item_title_sold_last_from_table(table):
     """
 
     # your code
-
+'''
+#  ****** prima functie pe care trb sa o fac *******
+table = [['kH34Ju#&', 'Age of Empires II: The Age of Kings','32','10','23','2016','jH34Jk#&'], ['jH34Ju#&','Age of Mythology','40','1','21','2016','jH34Jk#&'], ['tH34Ju#&','Age of Empires II: The Conquerors','30','2','12','2016','jH34Jk#&']]
 
 def get_the_sum_of_prices(item_ids):
     """
@@ -256,12 +259,19 @@ def get_the_sum_of_prices(item_ids):
     Returns:
         number: the sum of the items' prices
     """
-
+    # table = data_manager.get_table_from_file(file_sales)
+    sum_item_ids = 0
+    for ids in item_ids:
+        for item in table:
+            if ids == item[ID]:
+                sum_item_ids += int(item[PRICE])
+    # return sum_item_ids
+    print(sum_item_ids)
     # your code
-
+get_the_sum_of_prices(['kH34Ju#&','jH34Ju#&', 'tH34Ju#&'])
 
 def get_the_sum_of_prices_from_table(table, item_ids):
-    """
+    '''
     Returns the sum of the prices of the items in the item_ids.
 
     Args:
@@ -270,10 +280,16 @@ def get_the_sum_of_prices_from_table(table, item_ids):
 
     Returns:
         number: the sum of the items' prices
-    """
-
+    '''
+    sum_item_ids = 0
+    for ids in item_ids:
+        for item in table:
+            if ids == item[ID]:
+                sum_item_ids += int(item[PRICE])
+    # return sum_item_ids
+    print(sum_item_ids)
     # your code
-
+get_the_sum_of_prices_from_table(table, ['kH34Ju#&','jH34Ju#&','tH34Ju#&'])
 
 def get_customer_id_by_sale_id(sale_id):
     """
@@ -286,6 +302,12 @@ def get_customer_id_by_sale_id(sale_id):
     Returns:
          str: customer_id that belongs to the given sale id
     """
+    # table = data_manager.get_table_from_file(file_sales)
+    for register in table:
+        if register[ID] == sale_id:
+            # return register[CUSTOMER_ID]
+            print(register[CUSTOMER_ID])
+get_customer_id_by_sale_id('kH34Ju#&')
 
     # your code
 
@@ -303,8 +325,14 @@ def get_customer_id_by_sale_id_from_table(table, sale_id):
     """
 
     # your code
+    for register in table:
+        if register[ID] == sale_id:
+            # return register[CUSTOMER_ID]
+            print(register[CUSTOMER_ID])
+get_customer_id_by_sale_id_from_table(table, 'jH34Ju#&')
 
-
+# *********** ultima **************
+'''
 def get_all_customer_ids():
     """
     Reads the sales table with the help of the data_manager module.
@@ -386,3 +414,4 @@ def get_num_of_sales_per_customer_ids_from_table(table):
     """
 
     # your code
+'''
