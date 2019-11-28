@@ -17,7 +17,8 @@ from sales import sales
 # Customer Relationship Management (CRM) module
 from crm import crm
 # Data Analyser module
-from data_analyser import data_analyser
+#from data_analyser import data_analyser
+import data_analyser
 
 
 def choose():

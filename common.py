@@ -235,8 +235,18 @@ def check_empty_table(table):
 
 
 def flip_dates(year1, month1, day1, year2, month2, day2):
-    if year1 > year2 or month1 > month2 or day1 > day2:
+    if year1 > year2:
         return True
+    elif year1 == year2:
+        if month1 > month2:
+            return True
+        elif month1 == month2:
+            if day1 > day2:
+                return True
+            else:
+                return False
+        else:
+            return False                       
     else:
         return False      
     return None 
@@ -331,3 +341,11 @@ day2 = 27
 print(date_in_between(2004, 5, 10,year1,month1,day1,year2,month2,day2))
 print(date_in_between(2007, 5, 27,year1,month1,day1,year2,month2,day2))
 '''
+
+
+def print_list_in_list(result):
+    for elem in range(len(result)):
+        if elem == len(result)-1:
+            print(result[elem], end=" ")
+        else:
+            print(result[elem], end=", ")

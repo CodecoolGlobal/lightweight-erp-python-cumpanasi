@@ -62,8 +62,21 @@ def get_the_buyer_name_spent_most_and_the_money_spent():
 
     # your code
     sales_id_dict = sales.get_all_sales_ids_for_customer_ids()
-    print(sales_id_dict)
+    list_of_tuples = []
+    for key in sales_id_dict.keys():
+        sum_per_id  = sales.get_the_sum_of_prices(sales_id_dict[key])
+        list_of_tuples.append((key, sum_per_id))
 
+    maxi = list_of_tuples[0][1]
+
+    returnable_list = []
+    for elem in list_of_tuples:
+        if elem[1] > maxi:
+            maxi = elem[1]
+    for elem in list_of_tuples:
+        if elem[1] == maxi:
+            returnable_list.append((crm.get_name_by_id(elem[0]), elem[1]))
+    ui.print_result(returnable_list,'Most frequent buyer(s) Name(s).')        
 
 def get_the_buyer_id_spent_most_and_the_money_spent():
     """
@@ -74,6 +87,24 @@ def get_the_buyer_id_spent_most_and_the_money_spent():
     """
 
     # your code
+    sales_id_dict = sales.get_all_sales_ids_for_customer_ids()
+    list_of_tuples = []
+    for key in sales_id_dict.keys():
+        sum_per_id  = sales.get_the_sum_of_prices(sales_id_dict[key])
+        list_of_tuples.append((key, sum_per_id))
+
+    maxi = list_of_tuples[0][1]
+
+    returnable_list = []
+    for elem in list_of_tuples:
+        if elem[1] > maxi:
+            maxi = elem[1]
+    for elem in list_of_tuples:
+        if elem[1] == maxi:
+            returnable_list.append((elem))
+    ui.print_result(returnable_list,'Most frequent buyer(s) ID.')        
+
+
 
 
 def get_the_most_frequent_buyers_names(num=1):
@@ -108,4 +139,5 @@ def get_the_most_frequent_buyers_ids(num=1):
     # your code
 
 
-print(get_the_buyer_name_spent_most_and_the_money_spent())
+get_the_buyer_name_spent_most_and_the_money_spent()
+get_the_buyer_id_spent_most_and_the_money_spent()
