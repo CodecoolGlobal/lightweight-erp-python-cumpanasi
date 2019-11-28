@@ -273,7 +273,7 @@ def get_items_sold_between(table, month_from, day_from, year_from, month_to, day
     #print(games_sold_between)
 
     if len(games_sold_between) == 0:
-        print('IS 0')
+        #print('IS 0')
         return None
     else:
         return games_sold_between
