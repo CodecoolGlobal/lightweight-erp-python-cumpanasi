@@ -349,3 +349,27 @@ def print_list_in_list(result):
             print(result[elem], end=" ")
         else:
             print(result[elem], end=", ")
+
+
+def patriotism():
+    RESET = '\033[0m'
+
+    len = 27
+    j = 0
+    while j < 4:
+        for i in range(27):
+            if i < 9:
+                print('\033[1;31;41m ', end ='')
+            elif i >= 9 and i < 18:
+                print('\033[1;33;43m ', end = '')
+            elif i >= 18 and i < 27:
+                print('\033[1;34;44m ', end = '')
+        print(RESET)        
+        j += 1
+    print('\033[1;31;40mLa', end = ' ')
+    print('\033[1;33;40mmulti', end = ' ')
+    print('\033[1;34;40mani,', end = ' ')  
+    print('\033[1;31;40mRO', end = '')
+    print('\033[1;33;40mMAN', end = '')
+    print('\033[1;34;40mIA!', end = '')   
+    print(RESET)
