@@ -49,11 +49,11 @@ def start_module():
                    'Update',
                    'Get lowest price item id',
                    'Get items sold between',
-                   'Test_7',
-                   'Test_8',
-                   'Test_9',
-                   'Test_10',
-                   'Test_11',
+                   'Get title',
+                   'Item id sold last',
+                   'Item title sold last from table',
+                   'Sum of prices from table',
+                   'Customer id by sale_id from table',
                    'Get all customers ID',
                    'Get all Sales for all ID\'s',
                    'Get count of Sales per ID.']
@@ -94,20 +94,36 @@ def start_module():
             print(year_from,month_from,day_from)
             print(year_to,month_to,day_to)
             result = get_items_sold_between(table,month_from, day_from, year_from, month_to, day_to, year_to)
-            #print(result, type(result))
             ui.print_result(result, "Games in between: ")
+        elif option == '7':
+            return_inputs = ui.get_inputs(['ID'],'Enter the ID')
+            ui.print_result_inventory(get_title_by_id_from_table(table,return_inputs[0]),"TITLE")
+        elif option == '8':
+            ui.print_result_inventory(get_item_id_sold_last_from_table(table), "ID")
+        elif option == '9':
+            ui.print_result_inventory(get_item_title_sold_last_from_table(table),"Title")
+        elif option == '10':
+            ui.print_result_inventory(get_the_sum_of_prices_from_table(table, items_list(table)), "Sum")
+        elif option == '11':
+            return_inputs = ui.get_inputs(['ID'],'Enter the ID')
+            ui.print_result_inventory(get_customer_id_by_sale_id_from_table(table, return_inputs[0])," Customer")
         elif option == '12':
             get_all_customer_ids_from_table(table)
         elif option == '13':
             get_all_sales_ids_for_customer_ids_from_table(table)
         elif option == '14':
             get_num_of_sales_per_customer_ids_from_table(table)
-
         elif option == '0':
             break
         else:
             raise KeyError("There is no such option!")
-    
+
+
+def items_list(table):
+    list_item = []
+    for x in table:
+        list_item.append(x[ID])
+    return list_item
 
 
 def show_table(table):
