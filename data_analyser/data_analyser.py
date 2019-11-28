@@ -37,9 +37,9 @@ def start_module():
         inputs = ui.get_inputs(["Please enter a number: "], "")
         option = inputs[0]
         if option == "1":
-            ui.print_result(get_the_last_buyer_name(), "Last Buyer")
+            ui.print_result_inventory(get_the_last_buyer_name(), "Last Buyer Name")
         elif option == "2":
-            ui.print_result(get_the_last_buyer_id(),"Last Buyer ID")
+            ui.print_result_inventory(get_the_last_buyer_id(),"Last Buyer ID")
         elif option == "3":
             get_the_buyer_name_spent_most_and_the_money_spent()
         elif option == "4":
@@ -52,8 +52,6 @@ def start_module():
             break
         else:
             raise KeyError("There is no such option.")
-    
-
     
 
 
