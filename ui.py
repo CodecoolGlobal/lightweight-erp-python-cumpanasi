@@ -102,9 +102,13 @@ def print_result(result, label):
     # your code
     if label != '':
         print(label)
-    if type(result) == list:
+    if result is None:
+        print('None')    
+    elif type(result) == list:
         if type(result[FIRST_ELEM]) == list:
-            pass
+            for elem in range(len(result)):
+                common.print_list_in_list(result[elem])
+                print('\n')
         else:
             for elem in range(len(result)):
                 if elem == len(result)-1:

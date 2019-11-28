@@ -1,7 +1,7 @@
 # Do not modify this file
 # run this program (the ERP software) from the terminal from thd root directory of this project
 
-
+import common
 import sys
 import ui  # User Interface
 # Store module
@@ -18,6 +18,7 @@ from sales import sales
 from crm import crm
 # Data Analyser module
 from data_analyser import data_analyser
+
 
 
 def choose():
@@ -57,6 +58,7 @@ def handle_menu():
 
 def main():
     while True:
+        common.patriotism()
         handle_menu()
         try:
             choose()

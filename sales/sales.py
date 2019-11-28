@@ -79,6 +79,7 @@ def start_module():
             date2 = ui.get_inputs(['Year', 'Month' , 'Day'], 'Get End Date')
 
             if common.flip_dates(int(date1[FIRST_PROP]), int(date1[SECOND_PROP]), int(date1[THIRD_PROP]), int(date2[FIRST_PROP]), int(date2[SECOND_PROP]), int(date2[THIRD_PROP])) == True:
+                print('Flipped Dates.')
                 date1[FIRST_PROP],date2[FIRST_PROP] = date2[FIRST_PROP],date1[FIRST_PROP]
                 date1[SECOND_PROP],date2[SECOND_PROP] = date2[SECOND_PROP],date1[SECOND_PROP]
                 date1[THIRD_PROP],date2[THIRD_PROP] = date2[THIRD_PROP],date1[THIRD_PROP]
@@ -90,7 +91,10 @@ def start_module():
             day_from = int(date1[THIRD_PROP])
             day_to = int(date2[THIRD_PROP])
             
+            print(year_from,month_from,day_from)
+            print(year_to,month_to,day_to)
             result = get_items_sold_between(table,month_from, day_from, year_from, month_to, day_to, year_to)
+            #print(result, type(result))
             ui.print_result(result, "Games in between: ")
         elif option == '12':
             get_all_customer_ids_from_table(table)
@@ -231,7 +235,7 @@ def get_lowest_price_item_id(table):
         names_ids_min[sublist][SECOND_PROP] = names_ids_min[sublist][SECOND_PROP].lower()
 
     names_ids_min = common.sort_me(names_ids_min)
-    print(names_ids_min)
+    #print(names_ids_min)
 
     for elem in range(len(names_ids_min)):
         names_alpha.append(names_ids_min[elem][FIRST_PROP])
@@ -266,7 +270,14 @@ def get_items_sold_between(table, month_from, day_from, year_from, month_to, day
         if common.date_in_between(int(table[element][YEAR]), int(table[element][MONTH]), int(table[element][DAY]), year_from, month_from, day_from, year_to, month_to, day_to) == True:
             games_sold_between.append(table[element])
 
-    print(games_sold_between)
+    #print(games_sold_between)
+
+    if len(games_sold_between) == 0:
+        #print('IS 0')
+        return None
+    else:
+        return games_sold_between
+        
 
 
 

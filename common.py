@@ -235,8 +235,18 @@ def check_empty_table(table):
 
 
 def flip_dates(year1, month1, day1, year2, month2, day2):
-    if year1 > year2 or month1 > month2 or day1 > day2:
+    if year1 > year2:
         return True
+    elif year1 == year2:
+        if month1 > month2:
+            return True
+        elif month1 == month2:
+            if day1 > day2:
+                return True
+            else:
+                return False
+        else:
+            return False                       
     else:
         return False      
     return None 
@@ -331,3 +341,35 @@ day2 = 27
 print(date_in_between(2004, 5, 10,year1,month1,day1,year2,month2,day2))
 print(date_in_between(2007, 5, 27,year1,month1,day1,year2,month2,day2))
 '''
+
+
+def print_list_in_list(result):
+    for elem in range(len(result)):
+        if elem == len(result)-1:
+            print(result[elem], end=" ")
+        else:
+            print(result[elem], end=", ")
+
+
+def patriotism():
+    RESET = '\033[0m'
+
+    len = 27
+    j = 0
+    while j < 4:
+        for i in range(27):
+            if i < 9:
+                print('\033[1;31;41m ', end ='')
+            elif i >= 9 and i < 18:
+                print('\033[1;33;43m ', end = '')
+            elif i >= 18 and i < 27:
+                print('\033[1;34;44m ', end = '')
+        print(RESET)        
+        j += 1
+    print('\033[1;31;40mLa', end = ' ')
+    print('\033[1;33;40mmulti', end = ' ')
+    print('\033[1;34;40mani,', end = ' ')  
+    print('\033[1;31;40mRO', end = '')
+    print('\033[1;33;40mMAN', end = '')
+    print('\033[1;34;40mIA!', end = '')   
+    print(RESET)
